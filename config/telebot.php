@@ -45,7 +45,8 @@ return [
             ],
 
             'handlers' => [
-                \App\Commands\Bot\StartCommand::class
+                \App\Commands\Bot\StartCommand::class,
+                \App\Commands\Bot\HelloCommand::class
             ],
         ],
 

@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Site extends Model
+class Feed extends Model
 {
     use HasFactory;
     use SoftDeletes;
@@ -25,17 +25,27 @@ class Site extends Model
      * @var string[]
      */
     protected $fillable = [
-        'link',
         'title',
+        'link',
         'description',
-        'fed_at',
+        'published_at'
     ];
 
     /**
-     * @return HasMany
+     * The attributes that should be cast.
+     *
+     * @var array
      */
-    public function feeds(): HasMany
+    protected $casts = [
+        'id' => 'string',
+        'title' => 'string',
+    ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function site(): BelongsTo
     {
-        return $this->hasMany(Feed::class);
+        return $this->belongsTo(Site::class);
     }
 }
