@@ -4,10 +4,11 @@ namespace App\Notifications;
 
 use App\Models\Feed;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use WeStacks\TeleBot\Laravel\TelegramNotification;
 
-class NewFeed extends Notification
+class NewFeed extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -41,9 +42,6 @@ class NewFeed extends Notification
                 'chat_id' => $notifiable->id,
                 'text' => "<a href=\"{$this->feed->link}\">🗞 New on {$this->feed->site->title}</a>
 {$this->feed->title}
-
-{$this->feed->description}
-
 <a href=\"{$this->feed->link}\">Open in browser</a>",
                 'parse_mode' => 'html'
             ]);

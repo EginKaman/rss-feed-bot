@@ -15,7 +15,8 @@
         "predis/predis": "^1.1",
         "socialiteproviders/telegram": "^4.1",
         "westacks/telebot": "^1.12",
-        "willvincent/feeds": "^2.2"
+        "willvincent/feeds": "^2.2",
+        "ext-json": "*"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
