@@ -88,7 +88,7 @@ return [
         'bgsound', 'class', 'expr', 'id', 'style', 'onclick', 'onerror', 'onfinish', 'onmouseover', 'onmouseout',
         'onfocus', 'onblur', 'lowsrc', 'dynsrc',
     ],
-
+    'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36',
     /*
     |--------------------------------------------------------------------------
     | CURL Options
@@ -98,7 +98,10 @@ return [
     | Set to null to disable
     |
     */
-    'curl.options' => null,
+    'curl.options' => [
+        CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36',
+        CURLOPT_RETURNTRANSFER => 1
+    ],
 
     'curl.timeout' => null,
 

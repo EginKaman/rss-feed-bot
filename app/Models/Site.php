@@ -38,4 +38,12 @@ class Site extends Model
     {
         return $this->hasMany(Feed::class);
     }
+
+    /**
+     * @return HasMany
+     */
+    public function authentications(): HasMany
+    {
+        return $this->hasMany(SiteAuthentication::class);
+    }
 }

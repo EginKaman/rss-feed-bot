@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Feed extends Model
+class SiteAuthentication extends Model
 {
     use HasFactory;
     use SoftDeletes;
@@ -25,11 +25,12 @@ class Feed extends Model
      * @var string[]
      */
     protected $fillable = [
-        'title',
-        'link',
-        'home_link',
-        'description',
-        'published_at'
+        'login_url',
+        'login',
+        'login_field',
+        'password',
+        'password_field',
+        'additional_fields'
     ];
 
     /**
@@ -38,8 +39,7 @@ class Feed extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'string',
-        'title' => 'string',
+        'additional_fields' => 'json'
     ];
 
     /**

@@ -40,7 +40,7 @@ class NewFeed extends Notification implements ShouldQueue
         return (new TelegramNotification)->bot('bot')
             ->sendMessage([
                 'chat_id' => $notifiable->id,
-                'text' => "<a href=\"{$this->feed->link}\">🗞 New on {$this->feed->site->title}</a>
+                'text' => "<a href=\"{$this->feed->home_link}\">🗞 New on {$this->feed->site->title}</a>
 {$this->feed->title}
 <a href=\"{$this->feed->link}\">Open in browser</a>",
                 'parse_mode' => 'html'

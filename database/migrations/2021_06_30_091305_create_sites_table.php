@@ -17,6 +17,7 @@ class CreateSitesTable extends Migration
             $table->uuid('id')->primary()->default(DB::raw('gen_random_uuid()'));
             $table->string('title');
             $table->text('description')->nullable();
+            $table->text('home_link');
             $table->text('link');
             $table->timestamp('fed_at')->nullable();
             $table->softDeletes();
