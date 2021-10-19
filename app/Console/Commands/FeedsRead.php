@@ -63,7 +63,7 @@ class FeedsRead extends Command
                     \DB::beginTransaction();
                     foreach ($items as $item) {
                         $photo = null;
-                        if ($item->get_enclosure()) {
+                        if ($item->get_enclosure()->get_link()) {
                             $photo = $item->get_enclosure()->get_link();
                         } else {
                             $dom = new \DOMDocument();
