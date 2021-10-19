@@ -16,6 +16,7 @@ class CreateFeedsTable extends Migration
         Schema::create('feeds', function (Blueprint $table) {
             $table->uuid('id')->primary()->default(DB::raw('gen_random_uuid()'));
             $table->foreignUuid('site_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->text('photo')->nullable();
             $table->string('title')->nullable();
             $table->text('link');
             $table->text('description')->nullable();

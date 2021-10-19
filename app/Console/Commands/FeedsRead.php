@@ -62,12 +62,24 @@ class FeedsRead extends Command
                     $items = $feed->get_items();
                     \DB::beginTransaction();
                     foreach ($items as $item) {
+                        $photo = null;
+                        if ($item->get_enclosure()) {
+                            $photo = $item->get_enclosure()->get_link();
+                        } else {
+                            $dom = new \DOMDocument();
+                            $dom->loadHTML($item->get_description());
+                            $imgs = $dom->getElementsByTagName('img');
+                            if ($imgs->count()) {
+                                $photo = $imgs->item(0)->attributes->getNamedItem('src')->nodeValue;
+                            }
+                        }
                         $this->info($item->get_title());
                         $site->feeds()->firstOrCreate([
                             'link' => $item->get_link(),
                             'published_at' => new Carbon($item->get_date())
                         ], [
                             'title' => $item->get_title(),
+                            'photo' => $photo,
                             'link' => $item->get_link(),
                             'description' => $item->get_description(),
                             'published_at' => new Carbon($item->get_date())

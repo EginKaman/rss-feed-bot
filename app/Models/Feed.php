@@ -26,6 +26,7 @@ class Feed extends Model
      */
     protected $fillable = [
         'title',
+        'photo',
         'link',
         'home_link',
         'description',
