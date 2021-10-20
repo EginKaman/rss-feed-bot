@@ -67,6 +67,7 @@ class FeedsRead extends Command
                             $photo = $item->get_enclosure()->get_link();
                         } else {
                             $dom = new \DOMDocument();
+                            libxml_use_internal_errors(true);
                             $dom->loadHTML($item->get_description());
                             $imgs = $dom->getElementsByTagName('img');
                             if ($imgs->count()) {

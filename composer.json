@@ -9,7 +9,7 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.4",
-        "laravel/framework": "^8.63",
+        "laravel/framework": "^8.65",
         "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.6",
         "predis/predis": "^1.1",
@@ -18,7 +18,8 @@
         "willvincent/feeds": "^2.2",
         "ext-json": "*",
         "ext-curl": "*",
-        "ext-dom": "*"
+        "ext-dom": "*",
+        "ext-libxml": "*"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
