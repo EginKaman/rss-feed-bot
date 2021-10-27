@@ -9,7 +9,7 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.4",
-        "laravel/framework": "^8.65",
+        "laravel/framework": "^8.68",
         "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.6",
         "predis/predis": "^1.1",
@@ -24,9 +24,9 @@
     "require-dev": {
         "roave/security-advisories": "dev-latest",
         "barryvdh/laravel-ide-helper": "^2.10",
-        "facade/ignition": "^2.14",
+        "facade/ignition": "^2.15",
         "fakerphp/faker": "^1.16",
-        "laravel/sail": "^1.11",
+        "laravel/sail": "^1.12",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^5.10",
         "phpunit/phpunit": "^9.5"

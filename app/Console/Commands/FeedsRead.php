@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Site;
 use Carbon\Carbon;
+use DOMDocument;
 use Feeds;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
@@ -33,7 +34,8 @@ class FeedsRead extends Command
      */
     public function handle(): int
     {
-        Site::with('authentications')
+        Site::query()
+            ->with('authentications')
             ->where('fed_at', '<=', now()->subMinutes(10))
             ->chunk(10, function ($sites) {
                 $sites->each(function (Site $site) {
@@ -58,15 +60,14 @@ class FeedsRead extends Command
                             CURLOPT_COOKIE => implode(';', $cookies),
                         ]
                     ]);
-                    $this->cookies = [];
                     $items = $feed->get_items();
-                    \DB::beginTransaction();
+                    DB::beginTransaction();
                     foreach ($items as $item) {
                         $photo = null;
                         if ($item->get_enclosure()->get_link()) {
                             $photo = $item->get_enclosure()->get_link();
                         } else {
-                            $dom = new \DOMDocument();
+                            $dom = new DOMDocument();
                             libxml_use_internal_errors(true);
                             $dom->loadHTML($item->get_description());
                             $imgs = $dom->getElementsByTagName('img');
@@ -89,9 +90,9 @@ class FeedsRead extends Command
                     $site->fed_at = now();
                     $site->save();
                     try {
-                        \DB::commit();
-                    } catch (\Throwable $e) {
-                        \DB::rollBack(0);
+                        DB::commit();
+                    } catch (Throwable $e) {
+                        DB::rollBack(0);
                     }
                 });
             });
