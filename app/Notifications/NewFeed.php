@@ -42,7 +42,7 @@ class NewFeed extends Notification implements ShouldQueue
                 ->sendPhoto([
                     'chat_id' => $notifiable->id,
                     'photo' => $this->feed->photo,
-                    'caption' => "🗞 New on {$this->feed->site->title}
+                    'caption' => "🗞 <b>New on {$this->feed->site->title}</b>
 {$this->feed->title}
 <a href=\"{$this->feed->link}\">Open in browser</a>",
                     'parse_mode' => 'html'
@@ -51,7 +51,7 @@ class NewFeed extends Notification implements ShouldQueue
         return (new TelegramNotification)->bot('bot')
             ->sendMessage([
                 'chat_id' => $notifiable->id,
-                'text' => "🗞 New on {$this->feed->site->title}
+                'text' => "🗞 <b>New on {$this->feed->site->title}</b>
 {$this->feed->title}
 <a href=\"{$this->feed->link}\">Open in browser</a>",
                 'parse_mode' => 'html'
