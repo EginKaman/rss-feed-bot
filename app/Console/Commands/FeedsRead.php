@@ -4,7 +4,8 @@ namespace App\Console\Commands;
 
 use App\Models\Site;
 use Carbon\Carbon;
-use DOMDocument;
+use \DOMDocument;
+use \DB;
 use Feeds;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
