@@ -6,6 +6,10 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "ext-curl": "*",
+        "ext-dom": "*",
+        "ext-json": "*",
+        "ext-libxml": "*",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.2",
         "guzzlehttp/guzzle": "^7.5",
@@ -15,11 +19,7 @@
         "predis/predis": "^2.0",
         "socialiteproviders/telegram": "^4.1",
         "westacks/telebot": "^1.14",
-        "willvincent/feeds": "^2.4",
-        "ext-json": "*",
-        "ext-curl": "*",
-        "ext-dom": "*",
-        "ext-libxml": "*"
+        "willvincent/feeds": "^2.4"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
