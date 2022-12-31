@@ -17,14 +17,15 @@ class StartCommand extends CommandHandler
      */
     public function handle(): void
     {
-        $telegramUser = TelegramUser::firstOrNew([
-            'id' => $this->update->message->from->id,
-            'is_bot' => $this->update->message->from->is_bot,
-            'first_name' => $this->update->message->from->first_name,
-            'last_name' => $this->update->message->from->last_name,
-            'username' => $this->update->message->from->username,
-            'language_code' => $this->update->message->from->language_code,
-        ]);
+        $telegramUser = TelegramUser::query()
+            ->firstOrNew([
+                'id' => $this->update->message->from->id,
+                'is_bot' => $this->update->message->from->is_bot,
+                'first_name' => $this->update->message->from->first_name,
+                'last_name' => $this->update->message->from->last_name,
+                'username' => $this->update->message->from->username,
+                'language_code' => $this->update->message->from->language_code,
+            ]);
         if ($this->update->message->from->is_bot) {
             $telegramUser->fill([
                 'can_join_groups' => $this->update->message->from->can_join_groups,

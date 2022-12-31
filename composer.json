@@ -5,17 +5,17 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.1",
         "fideloper/proxy": "^4.4",
-        "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.4",
-        "laravel/framework": "^8.68",
-        "laravel/socialite": "^5.2",
-        "laravel/tinker": "^2.6",
-        "predis/predis": "^1.1",
+        "fruitcake/laravel-cors": "^2.2",
+        "guzzlehttp/guzzle": "^7.5",
+        "laravel/framework": "^9.43",
+        "laravel/socialite": "^5.5",
+        "laravel/tinker": "^2.7",
+        "predis/predis": "^2.0",
         "socialiteproviders/telegram": "^4.1",
-        "westacks/telebot": "^1.12",
-        "willvincent/feeds": "^2.2",
+        "westacks/telebot": "^1.14",
+        "willvincent/feeds": "^2.4",
         "ext-json": "*",
         "ext-curl": "*",
         "ext-dom": "*",
@@ -23,12 +23,11 @@
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "barryvdh/laravel-ide-helper": "^2.10",
-        "facade/ignition": "^2.15",
-        "fakerphp/faker": "^1.16",
-        "laravel/sail": "^1.12",
-        "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^5.10",
+        "spatie/laravel-ignition": "^1.6",
+        "fakerphp/faker": "^1.20",
+        "laravel/sail": "^1.16",
+        "mockery/mockery": "^1.5.1",
+        "nunomaduro/collision": "^6.3",
         "phpunit/phpunit": "^9.5"
     },
     "autoload": {
@@ -63,7 +62,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true

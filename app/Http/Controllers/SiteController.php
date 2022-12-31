@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Site;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class SiteController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -20,7 +21,7 @@ class SiteController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -30,8 +31,8 @@ class SiteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -41,8 +42,8 @@ class SiteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Site  $site
-     * @return \Illuminate\Http\Response
+     * @param Site $site
+     * @return Response
      */
     public function show(Site $site)
     {
@@ -52,8 +53,8 @@ class SiteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Site  $site
-     * @return \Illuminate\Http\Response
+     * @param Site $site
+     * @return Response
      */
     public function edit(Site $site)
     {
@@ -63,9 +64,9 @@ class SiteController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Site  $site
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Site $site
+     * @return Response
      */
     public function update(Request $request, Site $site)
     {
@@ -75,8 +76,8 @@ class SiteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Site  $site
-     * @return \Illuminate\Http\Response
+     * @param Site $site
+     * @return Response
      */
     public function destroy(Site $site)
     {
