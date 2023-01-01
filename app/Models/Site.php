@@ -46,4 +46,12 @@ class Site extends Model
     {
         return $this->hasMany(SiteAuthentication::class);
     }
+
+    /**
+     * @return HasMany
+     */
+    public function alternativeLinks(): HasMany
+    {
+        return $this->hasMany(AlternativeLink::class);
+    }
 }
