@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -26,6 +26,8 @@ class CreateSitesTable extends Migration
         Schema::create('user_site', function (Blueprint $table) {
             $table->foreignUuid('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignUuid('site_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+
+            $table->primary(['user_id', 'site_id']);
         });
     }
 

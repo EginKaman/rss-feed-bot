@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Observers;
 
@@ -15,7 +15,7 @@ class FeedObserver
      */
     public function created(Feed $feed): void
     {
-        dispatch(new SendMessageTelegramUsers($feed))->delay(10);
+        dispatch(new SendMessageTelegramUsers($feed))->delay(30);
     }
 
     /**
