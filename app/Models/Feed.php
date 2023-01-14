@@ -2,22 +2,25 @@
 
 namespace App\Models;
 
+use App\Orchid\Presenters\FeedPresenter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
+use Orchid\Filters\Filterable;
+use Orchid\Screen\AsSource;
 
 class Feed extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes, AsSource, Filterable, Searchable;
 
     /**
      * The "type" of the primary key ID.
      *
      * @var string
      */
-    protected $keyType = 'string';
+    protected $keyType = 'uuid';
 
     /**
      * The attributes that are mass assignable.
@@ -42,6 +45,16 @@ class Feed extends Model
         'id' => 'string',
         'title' => 'string',
     ];
+
+    /**
+     * Get the presenter for the model.
+     *
+     * @return FeedPresenter
+     */
+    public function presenter(): FeedPresenter
+    {
+        return new FeedPresenter($this);
+    }
 
     /**
      * @return BelongsTo
