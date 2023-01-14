@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use App\Orchid\Presenters\SitePresenter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
+use Orchid\Filters\Filterable;
+use Orchid\Screen\AsSource;
 
 class Site extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes, AsSource, Filterable, Searchable;
 
     /**
      * The "type" of the primary key ID.
@@ -30,6 +33,26 @@ class Site extends Model
         'description',
         'fed_at',
     ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'string',
+        'fed_at' => 'datetime',
+    ];
+
+    /**
+     * Get the presenter for the model.
+     *
+     * @return SitePresenter
+     */
+    public function presenter(): SitePresenter
+    {
+        return new SitePresenter($this);
+    }
 
     /**
      * @return HasMany

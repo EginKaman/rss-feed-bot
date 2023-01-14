@@ -13,22 +13,27 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.2",
         "guzzlehttp/guzzle": "^7.5",
+        "http-interop/http-factory-guzzle": "^1.2",
         "laravel/framework": "^9.43",
+        "laravel/scout": "^9.6",
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.7",
+        "meilisearch/meilisearch-php": "^0.26.1",
+        "orchid/platform": "^13.9",
         "predis/predis": "^2.0",
         "socialiteproviders/telegram": "^4.1",
         "westacks/telebot": "^1.14",
         "willvincent/feeds": "^2.4"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest",
-        "spatie/laravel-ignition": "^1.6",
+        "barryvdh/laravel-debugbar": "^3.7",
         "fakerphp/faker": "^1.20",
         "laravel/sail": "^1.16",
         "mockery/mockery": "^1.5.1",
         "nunomaduro/collision": "^6.3",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "roave/security-advisories": "dev-latest",
+        "spatie/laravel-ignition": "^1.6"
     },
     "autoload": {
         "psr-4": {

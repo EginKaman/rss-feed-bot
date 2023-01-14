@@ -17,7 +17,7 @@ class SiteAuthentication extends Model
      *
      * @var string
      */
-    protected $keyType = 'string';
+    protected $keyType = 'uuid';
 
     /**
      * The attributes that are mass assignable.
