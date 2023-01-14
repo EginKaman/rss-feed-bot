@@ -4,11 +4,13 @@ namespace App\Console\Commands;
 
 use App\Models\Site;
 use Carbon\Carbon;
-use \DOMDocument;
-use \DB;
+use DB;
+use DOMDocument;
 use Feeds;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class FeedsRead extends Command
 {
@@ -94,6 +96,7 @@ class FeedsRead extends Command
                         DB::commit();
                     } catch (Throwable $e) {
                         DB::rollBack(0);
+                        Log::error($e->getMessage(), $e->getTrace());
                     }
                 });
             });

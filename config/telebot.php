@@ -46,7 +46,9 @@ return [
 
             'handlers' => [
                 \App\Commands\Bot\StartCommand::class,
-                \App\Commands\Bot\HelloCommand::class
+                \App\Commands\Bot\HelloCommand::class,
+                \App\Commands\Bot\SitesCommand::class,
+                \App\Handlers\CallbackQueryHandler::class
             ],
         ],
 
