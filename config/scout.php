@@ -137,14 +137,17 @@ return [
         'index-settings' => [
             User::class => [
                  'filterableAttributes'=> ['id', 'name', 'email', 'deleted_at' ,'__soft_deleted'],
+                 'updateFilterableAttributes'=> ['id', 'name', 'email', 'deleted_at' ,'__soft_deleted'],
                  'sortableAttributes' => ['updated_at', 'created_at'],
              ],
              \App\Models\Site::class => [
                  'filterableAttributes'=> ['id', 'title', 'description', 'home_link', 'link', 'deleted_at', '__soft_deleted'],
+                 'updateFilterableAttributes'=> ['id', 'title', 'description', 'home_link', 'link', 'deleted_at', '__soft_deleted'],
                  'sortableAttributes' => ['fed_at', 'updated_at', 'created_at'],
              ],
              \App\Models\Feed::class => [
                  'filterableAttributes'=> ['id', 'site_id', 'title', 'description','link', 'deleted_at', '__soft_deleted'],
+                 'updateFilterableAttributes'=> ['id', 'site_id', 'title', 'description','link', 'deleted_at', '__soft_deleted'],
                  'sortableAttributes' => ['published_at', 'updated_at', 'created_at'],
              ],
         ],
