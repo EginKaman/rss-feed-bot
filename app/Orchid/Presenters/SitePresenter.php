@@ -11,33 +11,21 @@ use Orchid\Support\Presenter;
 
 class SitePresenter extends Presenter implements Searchable, Personable
 {
-    /**
-     * @return string
-     */
     public function label(): string
     {
         return 'Sites';
     }
 
-    /**
-     * @return string
-     */
     public function title(): string
     {
         return $this->entity->title;
     }
 
-    /**
-     * @return string
-     */
     public function subTitle(): string
     {
         return 'Site';
     }
 
-    /**
-     * @return string
-     */
     public function url(): string
     {
         return route('platform.sites.edit', $this->entity);
@@ -53,19 +41,12 @@ class SitePresenter extends Presenter implements Searchable, Personable
 
     /**
      * The number of models to return for show compact search result.
-     *
-     * @return int
      */
     public function perSearchShow(): int
     {
         return 3;
     }
 
-    /**
-     * @param string|null $query
-     *
-     * @return Builder
-     */
     public function searchQuery(string $query = null): Builder
     {
         return $this->entity->search($query);

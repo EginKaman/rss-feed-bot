@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Orchid\Presenters\FeedPresenter;
@@ -33,7 +35,7 @@ class Feed extends Model
         'link',
         'home_link',
         'description',
-        'published_at'
+        'published_at',
     ];
 
     /**
@@ -42,23 +44,18 @@ class Feed extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'string',
+        'id'    => 'string',
         'title' => 'string',
     ];
 
     /**
      * Get the presenter for the model.
-     *
-     * @return FeedPresenter
      */
     public function presenter(): FeedPresenter
     {
         return new FeedPresenter($this);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class);

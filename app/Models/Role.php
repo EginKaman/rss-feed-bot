@@ -40,16 +40,16 @@ class Role extends Model implements RoleInterface
      * @var array
      */
     protected $casts = [
-        'permissions' => 'array'
+        'permissions' => 'array',
     ];
 
     /**
      * @var array
      */
     protected $allowedFilters = [
-        'id' => Like::class,
-        'name' => Like::class,
-        'slug' => Like::class,
+        'id'          => Like::class,
+        'name'        => Like::class,
+        'slug'        => Like::class,
         'permissions' => Like::class,
     ];
 
@@ -72,9 +72,6 @@ class Role extends Model implements RoleInterface
         return $this->getKey();
     }
 
-    /**
-     * @return string
-     */
     public function getRoleSlug(): string
     {
         return $this->getAttribute('slug');
@@ -90,8 +87,6 @@ class Role extends Model implements RoleInterface
 
     /**
      * The Users relationship.
-     *
-     * @return BelongsToMany
      */
     public function users(): BelongsToMany
     {
@@ -99,14 +94,12 @@ class Role extends Model implements RoleInterface
     }
 
     /**
-     * @return bool|null
      * @throws Exception
-     *
      */
     public function delete(): ?bool
     {
         $isSoftDeleted = array_key_exists(SoftDeletes::class, class_uses($this));
-        if ($this->exists && !$isSoftDeleted) {
+        if ($this->exists && ! $isSoftDeleted) {
             $this->users()->detach();
         }
 

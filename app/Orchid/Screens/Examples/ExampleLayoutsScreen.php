@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Orchid\Screens\Examples;
 
 use App\Orchid\Layouts\Examples\TabMenuExample;
@@ -22,8 +24,6 @@ class ExampleLayoutsScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -43,9 +43,9 @@ class ExampleLayoutsScreen extends Screen
     /**
      * The screen's layout elements.
      *
-     * @return \Orchid\Screen\Layout[]
      * @throws Throwable
      *
+     * @return \Orchid\Screen\Layout[]
      */
     public function layout(): iterable
     {
@@ -81,8 +81,6 @@ class ExampleLayoutsScreen extends Screen
 
     /**
      * Display header description.
-     *
-     * @return string|null
      */
     public function description(): ?string
     {

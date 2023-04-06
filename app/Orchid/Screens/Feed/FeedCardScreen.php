@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Orchid\Screens\Feed;
 
@@ -21,7 +23,6 @@ class FeedCardScreen extends Screen
     /**
      * Fetch data to be displayed on the screen.
      *
-     * @param Feed $feed
      *
      * @return array
      */
@@ -34,8 +35,6 @@ class FeedCardScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -82,23 +81,18 @@ class FeedCardScreen extends Screen
 
     /**
      * Display header description.
-     *
-     * @return string|null
      */
     public function description(): ?string
     {
         return 'Update your account details such as name, email address and password';
     }
 
-    /**
-     * @param Request $request
-     */
     public function changePassword(Request $request): void
     {
         $guard = config('platform.guard', 'web');
         $request->validate([
-            'old_password' => 'required|current_password:' . $guard,
-            'password' => 'required|confirmed',
+            'old_password' => 'required|current_password:'.$guard,
+            'password'     => 'required|confirmed',
         ]);
 
         tap($request->user(), function ($user) use ($request) {
@@ -108,13 +102,10 @@ class FeedCardScreen extends Screen
         Toast::info(__('Password changed.'));
     }
 
-    /**
-     * @param Request $request
-     */
     public function save(Request $request): void
     {
         $request->validate([
-            'user.name' => 'required|string',
+            'user.name'  => 'required|string',
             'user.email' => [
                 'required',
                 Rule::unique(User::class, 'email')->ignore($request->user()),

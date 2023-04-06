@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Orchid;
 
@@ -15,8 +17,6 @@ class PlatformProvider extends OrchidServiceProvider
 {
     /**
      * Boot the application events.
-     *
-     * @param Dashboard $dashboard
      */
     public function boot(Dashboard $dashboard): void
     {
@@ -25,7 +25,7 @@ class PlatformProvider extends OrchidServiceProvider
         $dashboard->registerSearch([
             User::class,
             Site::class,
-            Feed::class
+            Feed::class,
             //...Models
         ]);
         // ...
@@ -41,19 +41,19 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('browser')
                 ->route('platform.sites')
                 ->title('Sites')
-                ->badge(fn() => 6),
+                ->badge(fn () => 6),
 
             Menu::make('Feeds')
                 ->icon('feed')
                 ->route('platform.feeds')
                 ->title('Feeds')
-                ->badge(fn() => 6),
+                ->badge(fn () => 6),
 
             Menu::make('Example screen')
                 ->icon('monitor')
                 ->route('platform.example')
                 ->title('Navigation')
-                ->badge(fn() => 6),
+                ->badge(fn () => 6),
 
             Menu::make('Dropdown menu')
                 ->icon('code')
@@ -98,7 +98,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('shuffle')
                 ->url('https://github.com/orchidsoftware/platform/blob/master/CHANGELOG.md')
                 ->target('_blank')
-                ->badge(fn() => Dashboard::version(), Color::DARK()),
+                ->badge(fn () => Dashboard::version(), Color::DARK()),
 
             Menu::make(__('Users'))
                 ->icon('user')

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Orchid\Screens\Site;
 
@@ -7,7 +9,6 @@ use App\Orchid\Layouts\Site\SiteEditLayout;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
@@ -16,38 +17,29 @@ use Orchid\Support\Facades\Toast;
 
 class SiteEditScreen extends Screen
 {
-    /**
-     * @var Site
-     */
     public Site $site;
 
     /**
      * Fetch data to be displayed on the screen.
      *
-     * @param Site $site
      *
      * @return array
      */
     public function query(Site $site): iterable
     {
         return [
-            'site' => $site
+            'site' => $site,
         ];
     }
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
         return 'Manage site';
     }
 
-    /**
-     * @return iterable|null
-     */
     public function permission(): ?iterable
     {
         return [
@@ -88,18 +80,16 @@ class SiteEditScreen extends Screen
                 ->title('Site')
                 ->description('A role is a collection of privileges (of possibly different services like the Users service, Moderator, and so on) that grants users with that role the ability to perform certain tasks or operations.'),
 
-//            Layout::block([
-//                RolePermissionLayout::class,
-//            ])
-//                ->title('Permission/Privilege')
-//                ->description('A privilege is necessary to perform certain tasks and operations in an area.'),
+            //            Layout::block([
+            //                RolePermissionLayout::class,
+            //            ])
+            //                ->title('Permission/Privilege')
+            //                ->description('A privilege is necessary to perform certain tasks and operations in an area.'),
         ];
     }
 
     /**
      * Display header description.
-     *
-     * @return string|null
      */
     public function description(): ?string
     {
@@ -107,9 +97,6 @@ class SiteEditScreen extends Screen
     }
 
     /**
-     * @param Request $request
-     * @param Site $site
-     *
      * @return RedirectResponse
      */
     public function save(Request $request, Site $site)
@@ -118,7 +105,7 @@ class SiteEditScreen extends Screen
             'site.title' => [
                 'required',
                 'string',
-                'max:255'
+                'max:255',
             ],
             'site.description' => [
                 'required',
@@ -144,11 +131,9 @@ class SiteEditScreen extends Screen
     }
 
     /**
-     * @param Site $site
-     *
-     * @return RedirectResponse
      * @throws Exception
      *
+     * @return RedirectResponse
      */
     public function remove(Site $site)
     {

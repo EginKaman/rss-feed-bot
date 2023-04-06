@@ -8,7 +8,23 @@ if [ ! -d /.composer ]; then
     mkdir /.composer
 fi
 
+if [ ! -f /etc/nginx/dhparam.pem ]; then
+    openssl dhparam -out /etc/nginx/dhparam.pem 4096
+fi
+
+service php8.2-fpm start
+
+nginx -t
+
+service nginx start
+
 chmod -R ugo+rw /.composer
+
+if [ ! -f /var/log/cron.log ]; then
+    touch /var/log/cron.log
+fi
+
+crontab /etc/cron.d/crontab
 
 if [ $# -gt 0 ]; then
     exec gosu $WWWUSER "$@"

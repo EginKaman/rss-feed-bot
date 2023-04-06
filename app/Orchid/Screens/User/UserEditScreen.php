@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Orchid\Screens\User;
 
@@ -23,15 +25,11 @@ use Orchid\Support\Facades\Toast;
 
 class UserEditScreen extends Screen
 {
-    /**
-     * @var User
-     */
     public User $user;
 
     /**
      * Fetch data to be displayed on the screen.
      *
-     * @param User $user
      *
      * @return array
      */
@@ -40,24 +38,19 @@ class UserEditScreen extends Screen
         $user->load(['roles']);
 
         return [
-            'user' => $user,
+            'user'       => $user,
             'permission' => $user->getStatusPermission(),
         ];
     }
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
         return $this->user->exists ? 'Edit User' : 'Create User';
     }
 
-    /**
-     * @return iterable|null
-     */
     public function permission(): ?iterable
     {
         return [
@@ -147,8 +140,6 @@ class UserEditScreen extends Screen
 
     /**
      * Display header description.
-     *
-     * @return string|null
      */
     public function description(): ?string
     {
@@ -156,9 +147,6 @@ class UserEditScreen extends Screen
     }
 
     /**
-     * @param User $user
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     public function save(User $user, Request $request)
@@ -171,7 +159,7 @@ class UserEditScreen extends Screen
         ]);
 
         $permissions = collect($request->get('permissions'))
-            ->map(fn($value, $key) => [base64_decode($key) => $value])
+            ->map(fn ($value, $key) => [base64_decode($key) => $value])
             ->collapse()
             ->toArray();
 
@@ -192,11 +180,9 @@ class UserEditScreen extends Screen
     }
 
     /**
-     * @param User $user
-     *
-     * @return RedirectResponse
      * @throws Exception
      *
+     * @return RedirectResponse
      */
     public function remove(User $user)
     {
@@ -208,8 +194,6 @@ class UserEditScreen extends Screen
     }
 
     /**
-     * @param User $user
-     *
      * @return RedirectResponse
      */
     public function loginAs(User $user)

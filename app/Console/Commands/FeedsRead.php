@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Models\Site;
@@ -32,8 +34,6 @@ class FeedsRead extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
     public function handle(): int
     {
@@ -45,23 +45,27 @@ class FeedsRead extends Command
                     $site->authentications->each(function ($authentication) {
                         $client = Http::asForm()
                             ->withUserAgent(config('feeds.user_agent'))
-                            ->post($authentication->login_url, array_merge([
-                                $authentication->login_field => $authentication->login,
-                                $authentication->password_field => $authentication->password
-                            ], $authentication->additional_fields));
+                            ->post(
+                                $authentication->login_url,
+                                array_merge([
+                                    $authentication->login_field    => $authentication->login,
+                                    $authentication->password_field => $authentication->password,
+                                ], $authentication->additional_fields)
+                            );
                         if ($client->failed()) {
                             return true;
                         }
                         $this->cookies = $client->cookies()->toArray();
+
                         return false;
                     });
                     $cookies = array_map(static function ($k, $v): string {
-                        return "{$v['Name']}=" . rawurlencode($v['Value']);
+                        return "{$v['Name']}=".rawurlencode($v['Value']);
                     }, array_keys($this->cookies), array_values($this->cookies));
                     $feed = Feeds::make($site->link, 0, false, [
                         'curl.options' => [
                             CURLOPT_COOKIE => implode(';', $cookies),
-                        ]
+                        ],
                     ]);
                     $items = $feed->get_items();
                     DB::beginTransaction();
@@ -80,18 +84,19 @@ class FeedsRead extends Command
                         }
                         $this->info($item->get_title());
                         $site->feeds()->firstOrCreate([
-                            'link' => $item->get_link(),
-                            'published_at' => new Carbon($item->get_date())
+                            'link'         => $item->get_link(),
+                            'published_at' => new Carbon($item->get_date()),
                         ], [
-                            'title' => $item->get_title(),
-                            'photo' => $photo,
-                            'link' => $item->get_link(),
-                            'description' => $item->get_description(),
-                            'published_at' => new Carbon($item->get_date())
+                            'title'        => $item->get_title(),
+                            'photo'        => $photo,
+                            'link'         => $item->get_link(),
+                            'description'  => $item->get_description(),
+                            'published_at' => new Carbon($item->get_date()),
                         ]);
                     }
                     $site->fed_at = now();
                     $site->save();
+
                     try {
                         DB::commit();
                     } catch (Throwable $e) {

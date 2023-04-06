@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Orchid\Screens\Examples;
 
 use Illuminate\Support\Str;
@@ -21,16 +23,14 @@ class ExampleTextEditorsScreen extends Screen
     public function query(): iterable
     {
         return [
-            'quill' => 'Hello! We collected all the fields in one place',
+            'quill'     => 'Hello! We collected all the fields in one place',
             'simplemde' => '# Big header',
-            'code' => Str::limit(file_get_contents(__FILE__), 500),
+            'code'      => Str::limit(file_get_contents(__FILE__), 500),
         ];
     }
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -39,8 +39,6 @@ class ExampleTextEditorsScreen extends Screen
 
     /**
      * Display header description.
-     *
-     * @return string|null
      */
     public function description(): ?string
     {
@@ -60,9 +58,9 @@ class ExampleTextEditorsScreen extends Screen
     /**
      * The screen's layout elements.
      *
-     * @return \Orchid\Screen\Layout[]
      * @throws Throwable
      *
+     * @return \Orchid\Screen\Layout[]
      */
     public function layout(): iterable
     {

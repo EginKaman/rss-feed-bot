@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,12 +27,9 @@ class AlternativeLink extends Model
     protected $fillable = [
         'title',
         'replaceable_link',
-        'link'
+        'link',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class);

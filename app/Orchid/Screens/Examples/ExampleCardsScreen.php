@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Orchid\Screens\Examples;
 
 use Illuminate\Http\Request;
@@ -29,8 +31,6 @@ class ExampleCardsScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -50,9 +50,9 @@ class ExampleCardsScreen extends Screen
     /**
      * The screen's layout elements.
      *
-     * @return array
      * @throws Throwable
      *
+     * @return array
      */
     public function layout(): iterable
     {
@@ -61,22 +61,19 @@ class ExampleCardsScreen extends Screen
                 Sight::make('id')->popover('Identifier, a symbol which uniquely identifies an object or record'),
                 Sight::make('name'),
                 Sight::make('email'),
-                Sight::make('email_verified_at', 'Email Verified')->render(fn(User $user) => $user->email_verified_at === null
+                Sight::make('email_verified_at', 'Email Verified')->render(fn (User $user) => $user->email_verified_at === null
                     ? '<i class="text-danger">●</i> False'
                     : '<i class="text-success">●</i> True'),
                 Sight::make('created_at', 'Created'),
                 Sight::make('updated_at', 'Updated'),
-                Sight::make('Simple Text')->render(fn() => 'This is a wider card with supporting text below as a natural lead-in to additional content.'),
-                Sight::make('Action')->render(fn() => Button::make('Show toast')
+                Sight::make('Simple Text')->render(fn () => 'This is a wider card with supporting text below as a natural lead-in to additional content.'),
+                Sight::make('Action')->render(fn () => Button::make('Show toast')
                     ->type(Color::DEFAULT())
                     ->method('showToast')),
             ])->title('User'),
         ];
     }
 
-    /**
-     * @param Request $request
-     */
     public function showToast(Request $request): void
     {
         Toast::warning($request->get('toast', 'Hello, world! This is a toast message.'));

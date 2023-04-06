@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
 
 return [
@@ -70,7 +72,7 @@ return [
     */
 
     'chunk' => [
-        'searchable' => 500,
+        'searchable'   => 500,
         'unsearchable' => 500,
     ],
 
@@ -114,7 +116,7 @@ return [
     */
 
     'algolia' => [
-        'id' => env('ALGOLIA_APP_ID', ''),
+        'id'     => env('ALGOLIA_APP_ID', ''),
         'secret' => env('ALGOLIA_SECRET', ''),
     ],
 
@@ -132,21 +134,21 @@ return [
     */
 
     'meilisearch' => [
-        'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
-        'key' => env('MEILISEARCH_KEY', null),
+        'host'           => env('MEILISEARCH_HOST', 'http://localhost:7700'),
+        'key'            => env('MEILISEARCH_KEY', null),
         'index-settings' => [
             User::class => [
-                 'filterableAttributes'=> ['id', 'name', 'email', 'deleted_at' ,'__soft_deleted'],
-                 'sortableAttributes' => ['updated_at', 'created_at'],
-             ],
-             \App\Models\Site::class => [
-                 'filterableAttributes'=> ['id', 'title', 'description', 'home_link', 'link', 'deleted_at', '__soft_deleted'],
-                 'sortableAttributes' => ['fed_at', 'updated_at', 'created_at'],
-             ],
-             \App\Models\Feed::class => [
-                 'filterableAttributes'=> ['id', 'site_id', 'title', 'description','link', 'deleted_at', '__soft_deleted'],
-                 'sortableAttributes' => ['published_at', 'updated_at', 'created_at'],
-             ],
+                'filterableAttributes' => ['id', 'name', 'email', 'deleted_at', '__soft_deleted'],
+                'sortableAttributes'   => ['updated_at', 'created_at'],
+            ],
+            \App\Models\Site::class => [
+                'filterableAttributes' => ['id', 'title', 'description', 'home_link', 'link', 'deleted_at', '__soft_deleted'],
+                'sortableAttributes'   => ['fed_at', 'updated_at', 'created_at'],
+            ],
+            \App\Models\Feed::class => [
+                'filterableAttributes' => ['id', 'site_id', 'title', 'description', 'link', 'deleted_at', '__soft_deleted'],
+                'sortableAttributes'   => ['published_at', 'updated_at', 'created_at'],
+            ],
         ],
     ],
 

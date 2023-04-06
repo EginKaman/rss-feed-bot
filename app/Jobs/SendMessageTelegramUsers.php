@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use App\Models\Feed;
@@ -19,8 +21,6 @@ class SendMessageTelegramUsers implements ShouldQueue
 
     /**
      * Create a new job instance.
-     *
-     * @param Feed $item
      */
     public function __construct(Feed $item)
     {
@@ -29,8 +29,6 @@ class SendMessageTelegramUsers implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle(): void
     {

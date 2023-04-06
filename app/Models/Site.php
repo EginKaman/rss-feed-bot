@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Orchid\Presenters\SitePresenter;
@@ -40,39 +42,28 @@ class Site extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'string',
+        'id'     => 'string',
         'fed_at' => 'datetime',
     ];
 
     /**
      * Get the presenter for the model.
-     *
-     * @return SitePresenter
      */
     public function presenter(): SitePresenter
     {
         return new SitePresenter($this);
     }
 
-    /**
-     * @return HasMany
-     */
     public function feeds(): HasMany
     {
         return $this->hasMany(Feed::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function authentications(): HasMany
     {
         return $this->hasMany(SiteAuthentication::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function alternativeLinks(): HasMany
     {
         return $this->hasMany(AlternativeLink::class);

@@ -27,13 +27,13 @@ class FeedListLayout extends Table
                 ->sort()
                 ->cantHide()
                 ->filter(Input::make())
-                ->render(fn(Feed $feed) => Link::make($feed->title)
+                ->render(fn (Feed $feed) => Link::make($feed->title)
                     ->route('platform.sites.edit', $feed->id)),
 
             TD::make('link', __('Link'))
                 ->sort()
                 ->cantHide()
-                ->render(fn(Feed $feed) => Link::make(__('Open'))
+                ->render(fn (Feed $feed) => Link::make(__('Open'))
                     ->href($feed->link)->target('_blank')),
 
             TD::make('site', __('Site'))
@@ -46,7 +46,7 @@ class FeedListLayout extends Table
 
             TD::make('created_at', __('Created'))
                 ->sort()
-                ->render(fn(Feed $feed) => $feed->created_at->toDateTimeString()),
+                ->render(fn (Feed $feed) => $feed->created_at->toDateTimeString()),
         ];
     }
 }
