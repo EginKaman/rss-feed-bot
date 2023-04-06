@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Orchid\Screens\User;
 
@@ -106,7 +108,7 @@ class UserListScreen extends Screen
 
     /**
      * @param Request $request
-     * @param User $user
+     * @param User    $user
      */
     public function saveUser(Request $request, User $user): void
     {

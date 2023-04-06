@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Orchid\Presenters\FeedPresenter;
@@ -33,7 +35,7 @@ class Feed extends Model
         'link',
         'home_link',
         'description',
-        'published_at'
+        'published_at',
     ];
 
     /**
@@ -42,7 +44,7 @@ class Feed extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'string',
+        'id'    => 'string',
         'title' => 'string',
     ];
 

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Orchid\Screens\Role;
 
@@ -32,7 +34,7 @@ class RoleEditScreen extends Screen
     public function query(Role $role): iterable
     {
         return [
-            'role' => $role,
+            'role'       => $role,
             'permission' => $role->getStatusPermission(),
         ];
     }
@@ -110,7 +112,7 @@ class RoleEditScreen extends Screen
 
     /**
      * @param Request $request
-     * @param Role $role
+     * @param Role    $role
      *
      * @return RedirectResponse
      */
@@ -126,7 +128,7 @@ class RoleEditScreen extends Screen
         $role->fill($request->get('role'));
 
         $role->permissions = collect($request->get('permissions'))
-            ->map(fn($value, $key) => [base64_decode($key) => $value])
+            ->map(fn ($value, $key) => [base64_decode($key) => $value])
             ->collapse()
             ->toArray();
 
@@ -140,9 +142,9 @@ class RoleEditScreen extends Screen
     /**
      * @param Role $role
      *
-     * @return RedirectResponse
      * @throws Exception
      *
+     * @return RedirectResponse
      */
     public function remove(Role $role)
     {

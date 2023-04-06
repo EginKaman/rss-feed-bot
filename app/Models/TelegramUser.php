@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,7 +34,7 @@ class TelegramUser extends Model
         'language_code',
         'can_join_groups',
         'can_read_all_group_messages',
-        'support_inline_queries'
+        'support_inline_queries',
     ];
 
     /**
@@ -41,13 +43,13 @@ class TelegramUser extends Model
      * @var array
      */
     protected $casts = [
-        'is_bot' => 'boolean',
-        'first_name' => 'string',
-        'last_name' => 'string',
-        'username' => 'string',
-        'language_code' => 'string',
-        'can_join_groups' => 'boolean',
+        'is_bot'                      => 'boolean',
+        'first_name'                  => 'string',
+        'last_name'                   => 'string',
+        'username'                    => 'string',
+        'language_code'               => 'string',
+        'can_join_groups'             => 'boolean',
         'can_read_all_group_messages' => 'boolean',
-        'support_inline_queries' => 'boolean'
+        'support_inline_queries'      => 'boolean',
     ];
 }

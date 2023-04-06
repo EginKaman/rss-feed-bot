@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use App\Models\Feed;
@@ -29,6 +31,7 @@ class NewFeed extends Notification implements ShouldQueue
      * Get the notification's delivery channels.
      *
      * @param mixed $notifiable
+     *
      * @return array
      */
     public function via($notifiable): array
@@ -42,34 +45,32 @@ class NewFeed extends Notification implements ShouldQueue
             return (new TelegramNotification)->bot('bot')
                 ->sendPhoto([
                     'chat_id' => $notifiable->id,
-                    'photo' => $this->feed->photo,
+                    'photo'   => $this->feed->photo,
                     'caption' => "🗞 <b>New on {$this->feed->site->title}</b>
 {$this->feed->title}
 <a href=\"{$this->feed->link}\">Open in browser</a>",
-                    'parse_mode' => 'html'
+                    'parse_mode' => 'html',
                 ]);
         }
+
         return (new TelegramNotification)->bot('bot')
             ->sendMessage([
                 'chat_id' => $notifiable->id,
-                'text' => "🗞 <b>New on {$this->feed->site->title}</b>
+                'text'    => "🗞 <b>New on {$this->feed->site->title}</b>
 {$this->feed->title}
 <a href=\"{$this->feed->link}\">Open in browser</a>
 {$this->getAlternativeLinksToTelegram()}",
-                'parse_mode' => 'html'
+                'parse_mode' => 'html',
             ]);
     }
 
-    /**
-     *
-     */
     public function getAlternativeLinksToTelegram(): string
     {
         $text = '';
         foreach ($this->feed->site->alternativeLinks as $alternativeLink) {
-            $text .= PHP_EOL . '<a href="' . Str::replace($alternativeLink->replaceable_link, $alternativeLink->replaceable_link, $alternativeLink->site->link) . '">Open on ' . $alternativeLink->title . '</a>';
+            $text .= PHP_EOL.'<a href="'.Str::replace($alternativeLink->replaceable_link, $alternativeLink->replaceable_link, $alternativeLink->site->link).'">Open on '.$alternativeLink->title.'</a>';
         }
+
         return $text;
     }
-
 }

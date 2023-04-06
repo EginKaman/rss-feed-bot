@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Orchid\Screens\User;
 
@@ -96,8 +98,8 @@ class UserProfileScreen extends Screen
     {
         $guard = config('platform.guard', 'web');
         $request->validate([
-            'old_password' => 'required|current_password:' . $guard,
-            'password' => 'required|confirmed',
+            'old_password' => 'required|current_password:'.$guard,
+            'password'     => 'required|confirmed',
         ]);
 
         tap($request->user(), function ($user) use ($request) {
@@ -113,7 +115,7 @@ class UserProfileScreen extends Screen
     public function save(Request $request): void
     {
         $request->validate([
-            'user.name' => 'required|string',
+            'user.name'  => 'required|string',
             'user.email' => [
                 'required',
                 Rule::unique(User::class, 'email')->ignore($request->user()),

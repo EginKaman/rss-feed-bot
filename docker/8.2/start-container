@@ -10,6 +10,12 @@ fi
 
 chmod -R ugo+rw /.composer
 
+if [ ! -f /var/log/cron.log ]; then
+    touch /var/log/cron.log
+fi
+
+crontab /etc/cron.d/crontab
+
 if [ $# -gt 0 ]; then
     exec gosu $WWWUSER "$@"
 else

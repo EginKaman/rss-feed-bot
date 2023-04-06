@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Observers;
 
@@ -11,6 +13,7 @@ class FeedObserver
      * Handle the Feed "created" event.
      *
      * @param Feed $feed
+     *
      * @return void
      */
     public function created(Feed $feed): void
@@ -22,6 +25,7 @@ class FeedObserver
      * Handle the Feed "updated" event.
      *
      * @param Feed $feed
+     *
      * @return void
      */
     public function updated(Feed $feed)
@@ -33,6 +37,7 @@ class FeedObserver
      * Handle the Feed "deleted" event.
      *
      * @param Feed $feed
+     *
      * @return void
      */
     public function deleted(Feed $feed)
@@ -44,6 +49,7 @@ class FeedObserver
      * Handle the Feed "restored" event.
      *
      * @param Feed $feed
+     *
      * @return void
      */
     public function restored(Feed $feed)
@@ -55,6 +61,7 @@ class FeedObserver
      * Handle the Feed "force deleted" event.
      *
      * @param Feed $feed
+     *
      * @return void
      */
     public function forceDeleted(Feed $feed)

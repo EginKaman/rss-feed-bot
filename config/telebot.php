@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     /*-------------------------------------------------------------------------
     | Default Bot Name
@@ -24,14 +26,14 @@ return [
 
     'bots' => [
         'bot' => [
-            'token' => env('TELEGRAM_BOT_TOKEN'),
-            'name' => env('TELEGRAM_BOT_NAME', null),
-            'api_url' => 'https://api.telegram.org',
+            'token'      => env('TELEGRAM_BOT_TOKEN'),
+            'name'       => env('TELEGRAM_BOT_NAME', null),
+            'api_url'    => 'https://api.telegram.org',
             'exceptions' => true,
-            'async' => true,
+            'async'      => true,
 
             'webhook' => [
-                'url' => env('TELEGRAM_BOT_WEBHOOK_URL', env('APP_URL') . '/telebot/webhook/bot/' . env('TELEGRAM_BOT_TOKEN')),
+                'url' => env('TELEGRAM_BOT_WEBHOOK_URL', env('APP_URL').'/telebot/webhook/bot/'.env('TELEGRAM_BOT_TOKEN')),
                 // 'certificate'       => env('TELEGRAM_BOT_CERT_PA TH', storage_path('app/ssl/public.pem')),
                 // 'ip_address'        => '8.8.8.8',
                 // 'max_connections'   => 40,
@@ -48,7 +50,7 @@ return [
                 \App\Commands\Bot\StartCommand::class,
                 \App\Commands\Bot\HelloCommand::class,
                 \App\Commands\Bot\SitesCommand::class,
-                \App\Handlers\CallbackQueryHandler::class
+                \App\Handlers\CallbackQueryHandler::class,
             ],
         ],
 

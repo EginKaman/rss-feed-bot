@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Orchid\Screens\Examples;
 
 use App\Orchid\Layouts\Examples\ChartBarExample;
@@ -38,22 +40,22 @@ class ExampleScreen extends Screen
         return [
             'charts' => [
                 [
-                    'name' => 'Some Data',
+                    'name'   => 'Some Data',
                     'values' => [25, 40, 30, 35, 8, 52, 17],
                     'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
                 ],
                 [
-                    'name' => 'Another Set',
+                    'name'   => 'Another Set',
                     'values' => [25, 50, -10, 15, 18, 32, 27],
                     'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
                 ],
                 [
-                    'name' => 'Yet Another',
+                    'name'   => 'Yet Another',
                     'values' => [15, 20, -3, -15, 58, 12, -17],
                     'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
                 ],
                 [
-                    'name' => 'And Last',
+                    'name'   => 'And Last',
                     'values' => [10, 33, -8, -3, 70, 20, -34],
                     'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
                 ],
@@ -67,10 +69,10 @@ class ExampleScreen extends Screen
 
             ],
             'metrics' => [
-                'sales' => ['value' => number_format(6851), 'diff' => 10.08],
+                'sales'    => ['value' => number_format(6851), 'diff' => 10.08],
                 'visitors' => ['value' => number_format(24668), 'diff' => -30.76],
-                'orders' => ['value' => number_format(10000), 'diff' => 0],
-                'total' => number_format(65661),
+                'orders'   => ['value' => number_format(10000), 'diff' => 0],
+                'total'    => number_format(65661),
             ],
         ];
     }
@@ -145,7 +147,7 @@ class ExampleScreen extends Screen
     {
         return [
             Layout::metrics([
-                'Sales Today' => 'metrics.sales',
+                'Sales Today'    => 'metrics.sales',
                 'Visitors Today' => 'metrics.visitors',
                 'Pending Orders' => 'metrics.orders',
                 'Total Earnings' => 'metrics.total',
@@ -162,7 +164,7 @@ class ExampleScreen extends Screen
             Layout::table('table', [
                 TD::make('id', 'ID')
                     ->width('150')
-                    ->render(fn(Repository $model) => // Please use view('path')
+                    ->render(fn (Repository $model) => // Please use view('path')
                     "<img src='https://loremflickr.com/500/300?random={$model->get('id')}'
                               alt='sample'
                               class='mw-100 d-block img-fluid rounded-1 w-100'>
@@ -170,10 +172,10 @@ class ExampleScreen extends Screen
 
                 TD::make('name', 'Name')
                     ->width('450')
-                    ->render(fn(Repository $model) => Str::limit($model->get('name'), 200)),
+                    ->render(fn (Repository $model) => Str::limit($model->get('name'), 200)),
 
                 TD::make('price', 'Price')
-                    ->render(fn(Repository $model) => '$ ' . number_format($model->get('price'), 2)),
+                    ->render(fn (Repository $model) => '$ '.number_format($model->get('price'), 2)),
 
                 TD::make('created_at', 'Created'),
             ]),

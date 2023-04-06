@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Commands\Bot;
-
 
 use WeStacks\TeleBot\Handlers\CommandHandler;
 
@@ -17,7 +17,7 @@ class HelloCommand extends CommandHandler
     public function handle(): void
     {
         $this->sendMessage([
-            'text' => "Hello, {$this->update->message->chat->first_name}!"
+            'text' => "Hello, {$this->update->message->chat->first_name}!",
         ]);
     }
 }
