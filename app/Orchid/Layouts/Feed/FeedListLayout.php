@@ -26,9 +26,7 @@ class FeedListLayout extends Table
             TD::make('title', __('Title'))
                 ->sort()
                 ->cantHide()
-                ->filter(Input::make())
-                ->render(fn (Feed $feed) => Link::make($feed->title)
-                    ->route('platform.sites.edit', $feed->id)),
+                ->filter(Input::make()),
 
             TD::make('link', __('Link'))
                 ->sort()
@@ -42,7 +40,9 @@ class FeedListLayout extends Table
                 })
                 ->sort()
                 ->cantHide()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(fn (Feed $feed) => Link::make($feed->site->title)
+                    ->route('platform.sites.edit', $feed->site_id)),
 
             TD::make('created_at', __('Created'))
                 ->sort()

@@ -25,17 +25,10 @@ use Orchid\Support\Facades\Toast;
 
 class UserEditScreen extends Screen
 {
-    /**
-     * @var User
-     */
-    public User $user;
+    public ?User $user = null;
 
     /**
      * Fetch data to be displayed on the screen.
-     *
-     * @param User $user
-     *
-     * @return array
      */
     public function query(User $user): iterable
     {
@@ -49,17 +42,12 @@ class UserEditScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
         return $this->user->exists ? 'Edit User' : 'Create User';
     }
 
-    /**
-     * @return iterable|null
-     */
     public function permission(): ?iterable
     {
         return [
@@ -157,13 +145,7 @@ class UserEditScreen extends Screen
         return 'Details such as name, email and password';
     }
 
-    /**
-     * @param User    $user
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
-    public function save(User $user, Request $request)
+    public function save(User $user, Request $request): RedirectResponse
     {
         $request->validate([
             'user.email' => [
@@ -173,7 +155,7 @@ class UserEditScreen extends Screen
         ]);
 
         $permissions = collect($request->get('permissions'))
-            ->map(fn ($value, $key) => [base64_decode($key) => $value])
+            ->map(fn($value, $key) => [base64_decode($key) => $value])
             ->collapse()
             ->toArray();
 
@@ -194,13 +176,9 @@ class UserEditScreen extends Screen
     }
 
     /**
-     * @param User $user
-     *
      * @throws Exception
-     *
-     * @return RedirectResponse
      */
-    public function remove(User $user)
+    public function remove(User $user): RedirectResponse
     {
         $user->delete();
 
@@ -209,12 +187,7 @@ class UserEditScreen extends Screen
         return redirect()->route('platform.systems.users');
     }
 
-    /**
-     * @param User $user
-     *
-     * @return RedirectResponse
-     */
-    public function loginAs(User $user)
+    public function loginAs(User $user): RedirectResponse
     {
         UserSwitch::loginAs($user);
 
