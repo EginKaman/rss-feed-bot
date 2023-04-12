@@ -17,10 +17,7 @@ use Orchid\Support\Facades\Toast;
 
 class SiteEditScreen extends Screen
 {
-    /**
-     * @var Site
-     */
-    public Site $site;
+    public ?Site $site = null;
 
     /**
      * Fetch data to be displayed on the screen.

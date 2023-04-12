@@ -19,10 +19,7 @@ use Orchid\Support\Facades\Toast;
 
 class RoleEditScreen extends Screen
 {
-    /**
-     * @var Role
-     */
-    public Role $role;
+    public ?Role $role = null;
 
     /**
      * Fetch data to be displayed on the screen.
