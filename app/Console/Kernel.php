@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('feeds:read')->everyMinute();
+        $schedule->command('horizon:snapshot')->everyFiveMinutes();
     }
 
     /**
