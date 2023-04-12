@@ -6,23 +6,16 @@ namespace App\Handlers;
 
 use App\Models\Site;
 use JsonException;
-use WeStacks\TeleBot\Interfaces\UpdateHandler;
-use WeStacks\TeleBot\Objects\Update;
-use WeStacks\TeleBot\TeleBot;
+use WeStacks\TeleBot\Handlers\UpdateHandler;
 
 class CallbackQueryHandler extends UpdateHandler
 {
     /**
      * This function should return `true` if this handler should handle given update, or `false` if should not.
-     *
-     * @param Update  $update
-     * @param TeleBot $bot
-     *
-     * @return bool
      */
-    public static function trigger(Update $update, TeleBot $bot): bool
+    public function trigger(): bool
     {
-        return isset($update->callback_query); // handle regular messages (example)
+        return isset($this->update->callback_query); // handle regular messages (example)
     }
 
     /**
