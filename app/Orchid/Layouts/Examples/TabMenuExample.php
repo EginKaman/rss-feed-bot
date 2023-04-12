@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Orchid\Layouts\Examples;
 
 use Orchid\Screen\Actions\Menu;
@@ -27,7 +29,7 @@ class TabMenuExample extends TabMenu
             Menu::make('Example screen')
                 ->icon('monitor')
                 ->route('platform.example')
-                ->badge(fn() => 6),
+                ->badge(fn () => 6),
         ];
     }
 }

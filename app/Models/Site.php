@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Orchid\Presenters\SitePresenter;
@@ -40,7 +42,7 @@ class Site extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'string',
+        'id'     => 'string',
         'fed_at' => 'datetime',
     ];
 

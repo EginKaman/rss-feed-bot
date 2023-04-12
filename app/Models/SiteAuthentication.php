@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,7 +32,7 @@ class SiteAuthentication extends Model
         'login_field',
         'password',
         'password_field',
-        'additional_fields'
+        'additional_fields',
     ];
 
     /**
@@ -39,7 +41,7 @@ class SiteAuthentication extends Model
      * @var array
      */
     protected $casts = [
-        'additional_fields' => 'json'
+        'additional_fields' => 'json',
     ];
 
     /**

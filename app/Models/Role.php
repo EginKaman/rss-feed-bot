@@ -40,16 +40,16 @@ class Role extends Model implements RoleInterface
      * @var array
      */
     protected $casts = [
-        'permissions' => 'array'
+        'permissions' => 'array',
     ];
 
     /**
      * @var array
      */
     protected $allowedFilters = [
-        'id' => Like::class,
-        'name' => Like::class,
-        'slug' => Like::class,
+        'id'          => Like::class,
+        'name'        => Like::class,
+        'slug'        => Like::class,
         'permissions' => Like::class,
     ];
 
@@ -99,14 +99,14 @@ class Role extends Model implements RoleInterface
     }
 
     /**
-     * @return bool|null
      * @throws Exception
      *
+     * @return bool|null
      */
     public function delete(): ?bool
     {
         $isSoftDeleted = array_key_exists(SoftDeletes::class, class_uses($this));
-        if ($this->exists && !$isSoftDeleted) {
+        if ($this->exists && ! $isSoftDeleted) {
             $this->users()->detach();
         }
 

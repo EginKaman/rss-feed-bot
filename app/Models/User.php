@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -58,8 +60,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'id' => 'string',
-        'permissions' => 'array',
+        'id'                => 'string',
+        'permissions'       => 'array',
         'email_verified_at' => 'datetime',
     ];
 

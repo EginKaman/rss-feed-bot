@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Orchid\Filters;
 
@@ -51,7 +53,7 @@ class RoleFilter extends Filter
      */
     public function value(): string
     {
-        return $this->name() . ': ' . Role::where('slug', $this->request->get('role'))->first()->name;
+        return $this->name().': '.Role::where('slug', $this->request->get('role'))->first()->name;
     }
 
     /**

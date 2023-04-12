@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Orchid\Screens\User;
 
@@ -40,7 +42,7 @@ class UserEditScreen extends Screen
         $user->load(['roles']);
 
         return [
-            'user' => $user,
+            'user'       => $user,
             'permission' => $user->getStatusPermission(),
         ];
     }
@@ -156,7 +158,7 @@ class UserEditScreen extends Screen
     }
 
     /**
-     * @param User $user
+     * @param User    $user
      * @param Request $request
      *
      * @return RedirectResponse
@@ -171,7 +173,7 @@ class UserEditScreen extends Screen
         ]);
 
         $permissions = collect($request->get('permissions'))
-            ->map(fn($value, $key) => [base64_decode($key) => $value])
+            ->map(fn ($value, $key) => [base64_decode($key) => $value])
             ->collapse()
             ->toArray();
 
@@ -194,9 +196,9 @@ class UserEditScreen extends Screen
     /**
      * @param User $user
      *
-     * @return RedirectResponse
      * @throws Exception
      *
+     * @return RedirectResponse
      */
     public function remove(User $user)
     {
