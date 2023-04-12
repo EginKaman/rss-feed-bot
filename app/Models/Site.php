@@ -31,6 +31,7 @@ class Site extends Model
      */
     protected $fillable = [
         'link',
+        'home_link',
         'title',
         'description',
         'fed_at',
