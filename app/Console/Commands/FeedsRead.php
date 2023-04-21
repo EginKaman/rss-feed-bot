@@ -86,7 +86,7 @@ class FeedsRead extends Command
                             'title'        => $item->get_title(),
                             'photo'        => $photo,
                             'link'         => $item->get_link(),
-                            'description'  => $item->get_description(),
+                            'description'  => $item->get_description() ?? $item->get_content(),
                             'published_at' => new Carbon($item->get_date()),
                         ]);
                     }
