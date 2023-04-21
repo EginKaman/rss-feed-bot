@@ -42,6 +42,7 @@ class FeedsRead extends Command
         Site::query()
             ->with('authentications')
             ->where('fed_at', '<=', now()->subMinutes(10))
+            ->orWhereNull('fed_at')
             ->chunk(10, function ($sites) {
                 $sites->each(function (Site $site) {
                     $site->authentications->each(function ($authentication) {

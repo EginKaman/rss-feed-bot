@@ -39,7 +39,7 @@ class SiteListLayout extends Table
 
             TD::make('fed_at', __('Fed'))
                 ->sort()
-                ->render(fn (Site $site) => $site->fed_at->toDateTimeString()),
+                ->render(fn (Site $site) => $site->fed_at?->toDateTimeString()),
 
             TD::make('created_at', __('Created'))
                 ->sort()
