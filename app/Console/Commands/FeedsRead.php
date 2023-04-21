@@ -6,13 +6,10 @@ namespace App\Console\Commands;
 
 use App\Models\Site;
 use Carbon\Carbon;
-use DB;
 use DOMDocument;
 use Feeds;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use Throwable;
 
 class FeedsRead extends Command
 {
@@ -68,7 +65,6 @@ class FeedsRead extends Command
                         ],
                     ]);
                     $items = $feed->get_items();
-                    DB::beginTransaction();
                     foreach ($items as $item) {
                         $photo = null;
                         if ($item->get_enclosure()->get_link()) {
@@ -96,13 +92,6 @@ class FeedsRead extends Command
                     }
                     $site->fed_at = now();
                     $site->save();
-
-                    try {
-                        DB::commit();
-                    } catch (Throwable $e) {
-                        DB::rollBack(0);
-                        Log::error($e->getMessage(), $e->getTrace());
-                    }
                 });
             });
 
