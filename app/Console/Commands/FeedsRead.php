@@ -69,10 +69,10 @@ class FeedsRead extends Command
                         $photo = null;
                         if ($item->get_enclosure()->get_link()) {
                             $photo = $item->get_enclosure()->get_link();
-                        } else {
+                        } elseif ($item->get_description() !== null || $item->get_content() !== null) {
                             $dom = new DOMDocument();
                             libxml_use_internal_errors(true);
-                            $dom->loadHTML($item->get_description());
+                            $dom->loadHTML($item->get_description() ?? $item->get_content());
                             $imgs = $dom->getElementsByTagName('img');
                             if ($imgs->count()) {
                                 $photo = $imgs->item(0)->attributes->getNamedItem('src')->nodeValue;
