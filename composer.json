@@ -19,6 +19,7 @@
         "laravel/telescope": "^4.14",
         "laravel/tinker": "^2.8",
         "meilisearch/meilisearch-php": "^0.26.1",
+        "muhammadhuzaifa/telescope-guzzle-watcher": "^1.0",
         "orchid/platform": "dev-master",
         "predis/predis": "^2.1",
         "socialiteproviders/telegram": "^4.1",
