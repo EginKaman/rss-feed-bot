@@ -21,7 +21,10 @@ class SiteListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'sites' => Site::filters()->defaultSort('created_at', 'desc')->paginate(),
+            'sites' => Site::filters()
+                ->withCount('feeds')
+                ->defaultSort('created_at', 'desc')
+                ->paginate(),
         ];
     }
 

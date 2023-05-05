@@ -29,7 +29,7 @@ class SiteListLayout extends Table
                 ->filter(Input::make())
                 ->render(fn (Site $site) => Link::make($site->title)
                     ->route('platform.sites.edit', $site->id)),
-
+            TD::make('feeds_count', __('Feeds count')),
             TD::make('home_link', __('Home link'))
                 ->sort()
                 ->cantHide()

@@ -64,7 +64,7 @@ class UserProfileScreen extends Screen
                 ->description(__("Update your account's profile information and email address."))
                 ->commands(
                     Button::make(__('Save'))
-                        ->type(Color::DEFAULT())
+                        ->type(Color::DEFAULT)
                         ->icon('check')
                         ->method('save')
                 ),
@@ -74,7 +74,7 @@ class UserProfileScreen extends Screen
                 ->description(__('Ensure your account is using a long, random password to stay secure.'))
                 ->commands(
                     Button::make(__('Update password'))
-                        ->type(Color::DEFAULT())
+                        ->type(Color::DEFAULT)
                         ->icon('check')
                         ->method('changePassword')
                 ),
