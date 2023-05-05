@@ -12,14 +12,14 @@
         "ext-libxml": "*",
         "guzzlehttp/guzzle": "^7.5",
         "http-interop/http-factory-guzzle": "^1.2",
-        "laravel/framework": "^10.7",
+        "laravel/framework": "^10.9",
         "laravel/horizon": "^5.15",
         "laravel/scout": "^9.8",
         "laravel/socialite": "^5.6",
         "laravel/telescope": "^4.14",
         "laravel/tinker": "^2.8",
         "meilisearch/meilisearch-php": "^0.26.1",
-        "muhammadhuzaifa/telescope-guzzle-watcher": "^1.0",
+        "muhammadhuzaifa/telescope-guzzle-watcher": "^1.2",
         "orchid/platform": "dev-master",
         "predis/predis": "^2.1",
         "socialiteproviders/telegram": "^4.1",
@@ -29,13 +29,13 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
         "fakerphp/faker": "^1.21",
-        "laravel/pint": "^1.8",
+        "laravel/pint": "^1.10",
         "laravel/sail": "^1.21",
         "mockery/mockery": "^1.5.1",
-        "nunomaduro/collision": "^7.4",
-        "phpunit/phpunit": "^10.0",
+        "nunomaduro/collision": "^7.5",
+        "phpunit/phpunit": "^10.1",
         "roave/security-advisories": "dev-latest",
-        "spatie/laravel-ignition": "^2.0"
+        "spatie/laravel-ignition": "^2.1"
     },
     "autoload": {
         "psr-4": {
