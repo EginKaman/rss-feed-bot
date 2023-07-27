@@ -46,7 +46,7 @@ class FeedsRead extends Command
                         $client = Http::asForm()
                             ->withUserAgent(config('feeds.user_agent'))
                             ->post($authentication->login_url, array_merge([
-                                $authentication->login_field    => $authentication->login,
+                                $authentication->login_field => $authentication->login,
                                 $authentication->password_field => $authentication->password,
                             ], $authentication->additional_fields));
                         if ($client->failed()) {
@@ -79,15 +79,19 @@ class FeedsRead extends Command
                             }
                         }
                         $this->info($item->get_title());
-                        $site->feeds()->updateOrCreate([
-                            'link'         => $item->get_link(),
+                        $feed = $site->feeds()->firstOrCreate([
+                            'link' => $item->get_link(),
                         ], [
-                            'title'        => $item->get_title(),
-                            'photo'        => $photo,
-                            'link'         => $item->get_link(),
-                            'description'  => $item->get_description() ?? $item->get_content(),
+                            'title' => $item->get_title(),
+                            'photo' => $photo,
+                            'link' => $item->get_link(),
+                            'description' => $item->get_description() ?? $item->get_content(),
                             'published_at' => new Carbon($item->get_date()),
                         ]);
+
+                        if (!$feed->wasRecentlyCreated) {
+                            $feed->save();
+                        }
                     }
                     $site->fed_at = now();
                     $site->save();

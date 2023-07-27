@@ -43,6 +43,7 @@ class NewFeed extends Notification implements ShouldQueue
 
     public function toTelegram(mixed $notifiable): PromiseInterface|Message|TelegramNotification
     {
+        $text = $this->feed->wasRecentlyCreated ? 'New on' : 'Updated on';
         if ($this->feed->photo) {
             return (new TelegramNotification)->bot('bot')
                 ->sendPhoto([
@@ -58,7 +59,7 @@ class NewFeed extends Notification implements ShouldQueue
         return (new TelegramNotification)->bot('bot')
             ->sendMessage([
                 'chat_id' => $notifiable->id,
-                'text'    => "🗞 <b>New on {$this->feed->site->title}</b>
+                'text'    => "🗞 <b>{$text} {$this->feed->site->title}</b>
 {$this->feed->title}
 <a href=\"{$this->feed->link}\">Open in browser</a>
 {$this->getAlternativeLinksToTelegram()}",
