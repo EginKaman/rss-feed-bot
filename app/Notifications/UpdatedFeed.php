@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 use WeStacks\TeleBot\Laravel\Notifications\TelegramNotification;
 use WeStacks\TeleBot\Objects\Message;
 
-class NewFeed extends Notification implements ShouldQueue
+class UpdatedFeed extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -43,7 +43,7 @@ class NewFeed extends Notification implements ShouldQueue
 
     public function toTelegram(mixed $notifiable): PromiseInterface|Message|TelegramNotification
     {
-        $text = "🗞 <b>New on {$this->feed->site->title}</b>
+        $text = "🗞 <b>Updated on {$this->feed->site->title}</b>
 {$this->feed->title}
 <a href=\"{$this->feed->link}\">Open in browser</a>
 {$this->getAlternativeLinksToTelegram()}";

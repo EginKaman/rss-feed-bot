@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
-use App\Jobs\SendMessageTelegramUsers;
+use App\Jobs\SendNewFeedToTelegramUsers;
+use App\Jobs\SendUpdatedFeedToTelegramUsers;
 use App\Models\Feed;
 
 class FeedObserver
@@ -18,7 +19,7 @@ class FeedObserver
      */
     public function created(Feed $feed): void
     {
-        dispatch(new SendMessageTelegramUsers($feed))->delay(30);
+        dispatch(new SendNewFeedToTelegramUsers($feed))->delay(30);
     }
 
     /**
@@ -28,9 +29,9 @@ class FeedObserver
      *
      * @return void
      */
-    public function updated(Feed $feed)
+    public function updated(Feed $feed): void
     {
-        dispatch(new SendMessageTelegramUsers($feed))->delay(30);
+        dispatch(new SendUpdatedFeedToTelegramUsers($feed))->delay(30);
     }
 
     /**
