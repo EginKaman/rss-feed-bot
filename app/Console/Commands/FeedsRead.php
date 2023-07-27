@@ -73,15 +73,14 @@ class FeedsRead extends Command
                             $dom = new DOMDocument();
                             libxml_use_internal_errors(true);
                             $dom->loadHTML($item->get_description() ?? $item->get_content());
-                            $imgs = $dom->getElementsByTagName('img');
-                            if ($imgs->count()) {
-                                $photo = $imgs->item(0)->attributes->getNamedItem('src')->nodeValue;
+                            $imagesTags = $dom->getElementsByTagName('img');
+                            if ($imagesTags->count()) {
+                                $photo = $imagesTags->item(0)->attributes->getNamedItem('src')->nodeValue;
                             }
                         }
                         $this->info($item->get_title());
-                        $site->feeds()->firstOrCreate([
+                        $site->feeds()->updateOrCreate([
                             'link'         => $item->get_link(),
-                            'published_at' => new Carbon($item->get_date()),
                         ], [
                             'title'        => $item->get_title(),
                             'photo'        => $photo,

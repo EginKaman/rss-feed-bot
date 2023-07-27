@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 use Orchid\Filters\Filterable;
+use Orchid\Filters\Types\Ilike;
+use Orchid\Filters\Types\WhereDateStartEnd;
 use Orchid\Screen\AsSource;
 
 class Site extends Model
@@ -45,6 +47,28 @@ class Site extends Model
     protected $casts = [
         'id'     => 'string',
         'fed_at' => 'datetime',
+    ];
+
+    protected array $allowedFilters = [
+        'link'        => Ilike::class,
+        'home_link'   => Ilike::class,
+        'title'       => Ilike::class,
+        'description' => Ilike::class,
+        'fed_at'      => WhereDateStartEnd::class,
+        'created_at'  => WhereDateStartEnd::class,
+        'updated_at'  => WhereDateStartEnd::class,
+        'deleted_at'  => WhereDateStartEnd::class,
+    ];
+
+    protected array $allowedSorts = [
+        'id',
+        'title',
+        'description',
+        'fed_at',
+        'feeds_count',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**

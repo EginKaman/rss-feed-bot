@@ -30,7 +30,7 @@ class FeedObserver
      */
     public function updated(Feed $feed)
     {
-        //
+        dispatch(new SendMessageTelegramUsers($feed))->delay(30);
     }
 
     /**

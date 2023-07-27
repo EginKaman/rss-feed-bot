@@ -184,7 +184,7 @@ return [
     'defaults' => [
         'supervisor-1' => [
             'connection'          => 'redis',
-            'queue'               => ['default'],
+            'queue'               => ['default', 'telegram', 'scout'],
             'balance'             => 'auto',
             'autoScalingStrategy' => 'time',
             'maxProcesses'        => 1,
@@ -200,10 +200,10 @@ return [
     'environments' => [
         'production' => [
             'supervisor-1' => [
-                'maxProcesses'    => 16,
+                'maxProcesses'    => 128,
                 'balanceMaxShift' => 1,
                 'balanceCooldown' => 3,
-                'memory'          => 256,
+                'memory'          => 512,
             ],
         ],
 

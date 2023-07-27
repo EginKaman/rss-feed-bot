@@ -97,14 +97,14 @@ Route::screen('sites/{site}/edit', SiteEditScreen::class)
 // Platform > Sites > Create
 Route::screen('sites/create', SiteEditScreen::class)
     ->name('platform.sites.create')
-    ->breadcrumbs(fn(Trail $trail) => $trail
+    ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.sites')
         ->push(__('Create'), route('platform.sites.create')));
 
 // Platform > Sites
 Route::screen('feeds', FeedListScreen::class)
     ->name('platform.feeds')
-    ->breadcrumbs(fn(Trail $trail) => $trail
+    ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
         ->push(__('Feeds'), route('platform.feeds')));
 

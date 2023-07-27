@@ -38,7 +38,7 @@ class SendMessageTelegramUsers implements ShouldQueue
     {
         TelegramUser::chunk(10, function ($telegramUsers) {
             $telegramUsers->each(function (TelegramUser $telegramUser) {
-                $telegramUser->notify(new NewFeed($this->item));
+                $telegramUser->notify((new NewFeed($this->item))->onQueue('telegram'));
             });
         });
     }
