@@ -79,7 +79,7 @@ class FeedsRead extends Command
                             }
                         }
                         $this->info($item->get_title());
-                        $site->feeds()->updateOrCreate([
+                        $feed = $site->feeds()->firstOrNew([
                             'link' => $item->get_link(),
                         ], [
                             'title' => $item->get_title(),
@@ -88,6 +88,10 @@ class FeedsRead extends Command
                             'description' => $item->get_description() ?? $item->get_content(),
                             'published_at' => new Carbon($item->get_date()),
                         ]);
+
+                        if ($feed->isDirty() || !$feed->exists){
+                            $feed->save();
+                        }
                     }
                     $site->fed_at = now();
                     $site->save();
