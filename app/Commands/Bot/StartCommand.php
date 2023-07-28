@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace App\Commands\Bot;
 
 use App\Models\TelegramUser;
+use Exception;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use WeStacks\TeleBot\Exceptions\TeleBotException;
 use WeStacks\TeleBot\Handlers\CommandHandler;
 
 class StartCommand extends CommandHandler
@@ -21,8 +25,8 @@ class StartCommand extends CommandHandler
             ->firstOrNew([
                 'id'            => $this->update->message->from->id,
                 'is_bot'        => $this->update->message->from->is_bot,
-                'first_name'    => $this->update->message->from->first_name,
-                'last_name'     => $this->update->message->from->last_name,
+                'first_name'    => $this->update->message->from->first_name ?? null,
+                'last_name'     => $this->update->message->from->last_name ?? null,
                 'username'      => $this->update->message->from->username ?? null,
                 'language_code' => $this->update->message->from->language_code,
             ]);
@@ -36,8 +40,15 @@ class StartCommand extends CommandHandler
         if ($telegramUser->isDirty()) {
             $telegramUser->save();
         }
-        $this->sendMessage([
-            'text' => "Hello, {$this->update->message->from->first_name}!",
-        ]);
+        try {
+            $this->sendMessage([
+                'text' => "Hello, {$this->update->message->from->first_name}!",
+            ]);
+        } catch (Exception $exception) {
+            if (Str::contains($exception->getMessage(), 'bot was blocked by the user')) {
+                TelegramUser::where('id', $this->update->message->from->id)->delete();
+            }
+            Log::error($exception->getMessage(), $exception->getTrace());
+        }
     }
 }
