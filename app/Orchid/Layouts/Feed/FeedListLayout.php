@@ -38,11 +38,14 @@ class FeedListLayout extends Table
                 ->render(function (Feed $feed) {
                     return e($feed->site->title);
                 })
-                ->sort()
                 ->cantHide()
                 ->filter(Input::make())
                 ->render(fn (Feed $feed) => Link::make($feed->site->title)
                     ->route('platform.sites.edit', $feed->site_id)),
+
+            TD::make('published_at', __('Published'))
+                ->sort()
+                ->render(fn (Feed $feed) => $feed->published_at->toDateTimeString()),
 
             TD::make('created_at', __('Created'))
                 ->sort()

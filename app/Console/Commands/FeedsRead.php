@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\Site;
-use Carbon\Carbon;
 use DOMDocument;
 use Feeds;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 
 class FeedsRead extends Command
@@ -81,7 +81,9 @@ class FeedsRead extends Command
                         $this->info($item->get_title());
                         $feed = $site->feeds()->firstOrNew([
                             'link' => $item->get_link(),
-                        ], [
+                        ]);
+
+                        $feed->fill([
                             'title' => $item->get_title(),
                             'photo' => $photo,
                             'link' => $item->get_link(),
@@ -89,7 +91,7 @@ class FeedsRead extends Command
                             'published_at' => new Carbon($item->get_date()),
                         ]);
 
-                        if ($feed->isDirty() || !$feed->exists){
+                        if ($feed->isDirty() || !$feed->exists) {
                             $feed->save();
                         }
                     }
@@ -98,6 +100,6 @@ class FeedsRead extends Command
                 });
             });
 
-        return 0;
+        return self::SUCCESS;
     }
 }

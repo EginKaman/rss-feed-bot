@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Commands\Bot;
 
 use App\Models\Site;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use JsonException;
 use WeStacks\TeleBot\Handlers\CommandHandler;
@@ -37,7 +38,15 @@ class SitesCommand extends CommandHandler
     public function handle(): void
     {
         $sites = Site::paginate(5);
-        $keyboard = array_map(call_user_func('self::mapSite'), $sites->items());
+        $keyboard = Arr::map($sites->items(), fn(Site $site) => [
+            [
+                'text'          => $site->title,
+                'callback_data' => json_encode([
+                    'a'  => 'sub',
+                    'id' => $site->id,
+                ], JSON_THROW_ON_ERROR),
+            ],
+        ]);
         $keyboard[][] = $this->getNextPageKeyboard($sites);
         $this->sendMessage(
             [
