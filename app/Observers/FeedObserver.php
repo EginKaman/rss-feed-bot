@@ -19,7 +19,7 @@ class FeedObserver
      */
     public function created(Feed $feed): void
     {
-        dispatch(new SendNewFeedToTelegramUsers($feed))->delay(30);
+        dispatch(new SendNewFeedToTelegramUsers($feed))->onQueue('telegram-new');
     }
 
     /**
@@ -31,7 +31,7 @@ class FeedObserver
      */
     public function updated(Feed $feed): void
     {
-        dispatch(new SendUpdatedFeedToTelegramUsers($feed))->delay(30);
+        dispatch(new SendUpdatedFeedToTelegramUsers($feed))->onQueue('telegram-update');
     }
 
     /**

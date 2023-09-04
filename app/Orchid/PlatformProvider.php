@@ -42,14 +42,12 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make('Sites')
                 ->icon('browser')
                 ->route('platform.sites')
-                ->title('Sites')
-                ->badge(fn () => 6),
+                ->title('Sites'),
 
             Menu::make('Feeds')
                 ->icon('feed')
                 ->route('platform.feeds')
-                ->title('Feeds')
-                ->badge(fn () => 6),
+                ->title('Feeds'),
 
             //            Menu::make('Example screen')
             //                ->icon('monitor')
@@ -94,7 +92,8 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make('Documentation')
                 ->title('Docs')
                 ->icon('docs')
-                ->url('https://orchid.software/en/docs'),
+                ->url('https://orchid.software/en/docs')
+                ->target('_blank'),
 
             Menu::make('Changelog')
                 ->icon('shuffle')

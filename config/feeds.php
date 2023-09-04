@@ -33,7 +33,7 @@ return [
     | Whether to disable the cache.
     |
     */
-    'cache.disabled' => false,
+    'cache.disabled' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ return [
         'bgsound', 'class', 'expr', 'id', 'style', 'onclick', 'onerror', 'onfinish', 'onmouseover', 'onmouseout',
         'onfocus', 'onblur', 'lowsrc', 'dynsrc',
     ],
-    'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36',
+    'user_agent' => 'Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/116.0',
     /*
     |--------------------------------------------------------------------------
     | CURL Options
@@ -101,10 +101,11 @@ return [
     |
     */
     'curl.options' => [
-        CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36',
+        CURLOPT_USERAGENT      => 'Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/116.0',
         CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_AUTOREFERER => true,
     ],
 
-    'curl.timeout' => null,
+    'curl.timeout' => 120,
 
 ];

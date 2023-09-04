@@ -8,7 +8,6 @@ use App\Models\TelegramUser;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use WeStacks\TeleBot\Exceptions\TeleBotException;
 use WeStacks\TeleBot\Handlers\CommandHandler;
 
 class StartCommand extends CommandHandler
@@ -40,6 +39,7 @@ class StartCommand extends CommandHandler
         if ($telegramUser->isDirty()) {
             $telegramUser->save();
         }
+
         try {
             $this->sendMessage([
                 'text' => "Hello, {$this->update->message->from->first_name}!",

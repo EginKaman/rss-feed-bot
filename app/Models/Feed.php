@@ -46,20 +46,20 @@ class Feed extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'string',
-        'title' => 'string',
-        'published_at' => 'datetime'
+        'id'           => 'string',
+        'title'        => 'string',
+        'published_at' => 'datetime',
     ];
 
     protected array $allowedFilters = [
-        'link' => Ilike::class,
-        'site_id' => Where::class,
-        'title' => Ilike::class,
-        'description' => Ilike::class,
+        'link'         => Ilike::class,
+        'site_id'      => Where::class,
+        'title'        => Ilike::class,
+        'description'  => Ilike::class,
         'published_at' => WhereDateStartEnd::class,
-        'created_at' => WhereDateStartEnd::class,
-        'updated_at' => WhereDateStartEnd::class,
-        'deleted_at' => WhereDateStartEnd::class,
+        'created_at'   => WhereDateStartEnd::class,
+        'updated_at'   => WhereDateStartEnd::class,
+        'deleted_at'   => WhereDateStartEnd::class,
     ];
 
     protected array $allowedSorts = [
@@ -87,21 +87,21 @@ class Feed extends Model
      */
     public function site(): BelongsTo
     {
-        return $this->belongsTo(Site::class);
+        return $this->belongsTo(Site::class)->withTrashed();
     }
 
     public function toSearchableArray(): array
     {
         return [
-            'id' => $this->getKey(),
-            'link' => $this->link,
-            'title' => $this->title,
-            'description' => $this->description,
+            'id'           => $this->getKey(),
+            'link'         => $this->link,
+            'title'        => $this->title,
+            'description'  => $this->description,
             'published_at' => $this->published_at,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'deleted_at' => $this->deleted_at,
-            'photo' => $this->photo
+            'created_at'   => $this->created_at,
+            'updated_at'   => $this->updated_at,
+            'deleted_at'   => $this->deleted_at,
+            'photo'        => $this->photo,
         ];
     }
 }

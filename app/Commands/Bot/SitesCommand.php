@@ -38,7 +38,7 @@ class SitesCommand extends CommandHandler
     public function handle(): void
     {
         $sites = Site::paginate(5);
-        $keyboard = Arr::map($sites->items(), fn(Site $site) => [
+        $keyboard = Arr::map($sites->items(), fn (Site $site) => [
             [
                 'text'          => $site->title,
                 'callback_data' => json_encode([
@@ -102,6 +102,7 @@ class SitesCommand extends CommandHandler
                     'text' => 'An unknown error occurred. Try again later.',
                 ]
             );
+            return [];
         }
     }
 }

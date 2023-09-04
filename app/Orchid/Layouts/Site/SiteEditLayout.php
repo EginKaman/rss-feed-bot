@@ -6,6 +6,7 @@ namespace App\Orchid\Layouts\Site;
 
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Layouts\Rows;
 
 class SiteEditLayout extends Rows
@@ -26,9 +27,9 @@ class SiteEditLayout extends Rows
                 ->placeholder(__('Name'))
                 ->help(__('Role display name')),
 
-            Input::make('site.description')
-                ->type('text')
-                ->max(255)
+            TextArea::make('site.description')
+                ->max(1000)
+                ->rows(10)
                 ->required()
                 ->title(__('Description'))
                 ->placeholder(__('Description'))

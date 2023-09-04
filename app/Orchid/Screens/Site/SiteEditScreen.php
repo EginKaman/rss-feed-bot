@@ -101,7 +101,7 @@ class SiteEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Access rights';
+        return 'Manage site';
     }
 
     /**

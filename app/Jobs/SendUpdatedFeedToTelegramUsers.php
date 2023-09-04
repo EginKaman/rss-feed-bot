@@ -6,7 +6,6 @@ namespace App\Jobs;
 
 use App\Models\Feed;
 use App\Models\TelegramUser;
-use App\Notifications\NewFeed;
 use App\Notifications\UpdatedFeed;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -23,7 +22,7 @@ class SendUpdatedFeedToTelegramUsers implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param Feed $item
+     * @param  Feed  $item
      */
     public function __construct(Feed $item)
     {
@@ -37,9 +36,9 @@ class SendUpdatedFeedToTelegramUsers implements ShouldQueue
      */
     public function handle(): void
     {
-        TelegramUser::chunk(10, function ($telegramUsers) {
+        TelegramUser::chunk(50, function ($telegramUsers) {
             $telegramUsers->each(function (TelegramUser $telegramUser) {
-                $telegramUser->notify((new UpdatedFeed($this->item))->onQueue('telegram'));
+                $telegramUser->notify((new UpdatedFeed($this->item)));
             });
         });
     }

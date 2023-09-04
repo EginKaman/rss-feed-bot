@@ -20,7 +20,7 @@ class FeedListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'feeds' => Feed::filters()->defaultSort('created_at', 'desc')->paginate(),
+            'feeds' => Feed::with('site')->filters()->defaultSort('created_at', 'desc')->paginate(),
         ];
     }
 

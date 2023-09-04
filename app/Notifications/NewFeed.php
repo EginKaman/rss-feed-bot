@@ -6,17 +6,13 @@ namespace App\Notifications;
 
 use App\Models\Feed;
 use GuzzleHttp\Promise\PromiseInterface;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Str;
 use WeStacks\TeleBot\Laravel\Notifications\TelegramNotification;
 use WeStacks\TeleBot\Objects\Message;
 
-class NewFeed extends Notification implements ShouldQueue
+class NewFeed extends Notification
 {
-    use Queueable;
-
     private Feed $feed;
 
     /**
@@ -26,7 +22,7 @@ class NewFeed extends Notification implements ShouldQueue
      */
     public function __construct(Feed $feed)
     {
-        $this->feed = $feed->load('site');
+        $this->feed = $feed->loadMissing('site');
     }
 
     /**
@@ -51,17 +47,17 @@ class NewFeed extends Notification implements ShouldQueue
         if ($this->feed->photo) {
             return (new TelegramNotification)->bot('bot')
                 ->sendPhoto([
-                    'chat_id' => $notifiable->id,
-                    'photo'   => $this->feed->photo,
-                    'caption' => $text,
+                    'chat_id'    => $notifiable->id,
+                    'photo'      => $this->feed->photo,
+                    'caption'    => $text,
                     'parse_mode' => 'html',
                 ]);
         }
 
         return (new TelegramNotification)->bot('bot')
             ->sendMessage([
-                'chat_id' => $notifiable->id,
-                'text'    => $text,
+                'chat_id'    => $notifiable->id,
+                'text'       => $text,
                 'parse_mode' => 'html',
             ]);
     }
