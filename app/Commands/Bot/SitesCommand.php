@@ -102,6 +102,7 @@ class SitesCommand extends CommandHandler
                     'text' => 'An unknown error occurred. Try again later.',
                 ]
             );
+
             return [];
         }
     }

@@ -18,7 +18,7 @@ use Orchid\Screen\AsSource;
 
 class Feed extends Model
 {
-    use HasFactory, SoftDeletes, AsSource, Filterable, Searchable;
+    use AsSource, Filterable, HasFactory, Searchable, SoftDeletes;
 
     /**
      * The "type" of the primary key ID.

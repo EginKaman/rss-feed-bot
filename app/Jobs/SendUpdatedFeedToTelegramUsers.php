@@ -12,17 +12,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Notification;
 
 class SendUpdatedFeedToTelegramUsers implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private Feed $item;
+    public Feed $item;
 
     /**
      * Create a new job instance.
      *
-     * @param  Feed  $item
+     * @param Feed $item
      */
     public function __construct(Feed $item)
     {
@@ -36,10 +37,8 @@ class SendUpdatedFeedToTelegramUsers implements ShouldQueue
      */
     public function handle(): void
     {
-        TelegramUser::chunk(50, function ($telegramUsers) {
-            $telegramUsers->each(function (TelegramUser $telegramUser) {
-                $telegramUser->notify((new UpdatedFeed($this->item)));
-            });
+        TelegramUser::chunk(10, function ($telegramUsers) {
+            Notification::sendNow($telegramUsers, new UpdatedFeed($this->item));
         });
     }
 }

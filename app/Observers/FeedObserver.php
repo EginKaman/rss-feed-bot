@@ -19,6 +19,9 @@ class FeedObserver
      */
     public function created(Feed $feed): void
     {
+        if ($feed->site->is_disabled) {
+            return;
+        }
         dispatch(new SendNewFeedToTelegramUsers($feed))->onQueue('telegram-new');
     }
 
@@ -31,6 +34,9 @@ class FeedObserver
      */
     public function updated(Feed $feed): void
     {
+        if ($feed->site->is_disabled) {
+            return;
+        }
         dispatch(new SendUpdatedFeedToTelegramUsers($feed))->onQueue('telegram-update');
     }
 

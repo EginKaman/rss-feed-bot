@@ -10,7 +10,7 @@ use Orchid\Screen\Contracts\Personable;
 use Orchid\Screen\Contracts\Searchable;
 use Orchid\Support\Presenter;
 
-class UserPresenter extends Presenter implements Searchable, Personable
+class UserPresenter extends Presenter implements Personable, Searchable
 {
     /**
      * @return string

@@ -6,14 +6,18 @@ namespace App\Notifications;
 
 use App\Models\Feed;
 use GuzzleHttp\Promise\PromiseInterface;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Str;
 use WeStacks\TeleBot\Laravel\Notifications\TelegramNotification;
 use WeStacks\TeleBot\Objects\Message;
 
-class NewFeed extends Notification
+class NewFeed extends Notification implements ShouldQueue
 {
-    private Feed $feed;
+    use Queueable;
+
+    public Feed $feed;
 
     /**
      * Create a new notification instance.

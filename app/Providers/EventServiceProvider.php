@@ -6,7 +6,9 @@ namespace App\Providers;
 
 use App\Listeners\NotificationFailedListener;
 use App\Models\Feed;
+use App\Models\Site;
 use App\Observers\FeedObserver;
+use App\Observers\SiteObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -37,6 +39,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Feed::observe(FeedObserver::class);
+        Site::observe(SiteObserver::class);
     }
 
     /**

@@ -6,6 +6,7 @@ namespace App\Orchid\Layouts\Site;
 
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Switcher;
 use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Layouts\Rows;
 
@@ -30,7 +31,6 @@ class SiteEditLayout extends Rows
             TextArea::make('site.description')
                 ->max(1000)
                 ->rows(10)
-                ->required()
                 ->title(__('Description'))
                 ->placeholder(__('Description'))
                 ->help(__('Site description')),
@@ -48,6 +48,11 @@ class SiteEditLayout extends Rows
                 ->title(__('Link to RSS feed'))
                 ->placeholder(__('Link'))
                 ->help(__('Link to RSS feed')),
+            Switcher::make('site.is_disabled')
+                ->sendTrueOrFalse()
+                ->title(__('Disabled'))
+                ->placeholder(__('Disabled'))
+                ->help(__('Disabled notifications from this site')),
         ];
     }
 }
