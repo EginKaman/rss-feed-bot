@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Orchid\Presenters\SitePresenter;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -17,14 +18,7 @@ use Orchid\Screen\AsSource;
 
 class Site extends Model
 {
-    use HasFactory, SoftDeletes, AsSource, Filterable, Searchable;
-
-    /**
-     * The "type" of the primary key ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
+    use AsSource, Filterable, HasFactory, HasUuids, Searchable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -36,7 +30,9 @@ class Site extends Model
         'home_link',
         'title',
         'description',
+        'is_disabled',
         'fed_at',
+        'paused_at',
     ];
 
     /**
@@ -45,8 +41,10 @@ class Site extends Model
      * @var array
      */
     protected $casts = [
-        'id'     => 'string',
-        'fed_at' => 'datetime',
+        'id'           => 'string',
+        'is_disabled'  => 'boolean',
+        'fed_at'       => 'datetime',
+        'paused_at'    => 'datetime',
     ];
 
     protected array $allowedFilters = [

@@ -17,7 +17,7 @@ use Orchid\Screen\AsSource;
 
 class User extends Authenticatable
 {
-    use SoftDeletes, Searchable, Notifiable, UserAccess, AsSource, Filterable, Chartable, HasFactory;
+    use AsSource, Chartable, Filterable, HasFactory, Notifiable, Searchable, SoftDeletes, UserAccess;
 
     /**
      * Indicates if the IDs are auto-incrementing.

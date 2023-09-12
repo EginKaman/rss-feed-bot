@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -19,7 +20,7 @@ use Orchid\Screen\AsSource;
 
 class Role extends Model implements RoleInterface
 {
-    use RoleAccess, Filterable, AsSource, Chartable, StatusAccess;
+    use AsSource, Chartable, Filterable, RoleAccess, StatusAccess;
 
     /**
      * @var string

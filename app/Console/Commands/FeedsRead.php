@@ -8,9 +8,11 @@ use App\Models\Site;
 use DOMDocument;
 use Feeds;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use SimplePie\SimplePie;
 
 class FeedsRead extends Command
@@ -40,8 +42,14 @@ class FeedsRead extends Command
     {
         Site::query()
             ->with('authentications')
-            ->where('fed_at', '<=', now()->subMinutes(10))
-            ->orWhereNull('fed_at')
+            ->where(function ($query) {
+                $query->where('pauses_at', '<=', now())
+                    ->orWhereNull('pauses_at');
+            })
+            ->where(function ($query) {
+                $query->where('fed_at', '<=', now()->subMinutes(10))
+                    ->orWhereNull('fed_at');
+            })
             ->orderBy('fed_at', 'desc')
             ->chunk(100, function ($sites) {
                 $sites->each(function (Site $site) {
@@ -73,13 +81,48 @@ class FeedsRead extends Command
                         $curlOptions[CURLOPT_COOKIE] = 'wp-wpml_current_language=uk;';
                     }
                     /** @var SimplePie $feed */
-                    $feed = Feeds::make($site->link, 0, false, [
+                    $feed = Feeds::make($site->link, 0, true, [
                         'curl.options' => $curlOptions + config('feeds')['curl.options'],
                     ]);
 
+                    if (Str::contains($feed->raw_data, 'xmlns="https://cyber.harvard.edu/rss/rss.html"')) {
+                        $rawData = str_replace('xmlns="https://cyber.harvard.edu/rss/rss.html"', 'xmlns:content="http://purl.org/rss/1.0/modules/content/"', $feed->raw_data);
+                        $feed = new SimplePie();
+                        $feed->set_raw_data($rawData);
+                        $feed->set_item_limit(0);
+
+                        $stripHtmlTags = Arr::get(config('feeds'), 'strip_html_tags.disabled', false);
+
+                        if (! $stripHtmlTags && ! empty(config('feeds.strip_html_tags.tags')) && is_array(config('feeds.strip_html_tags.tags'))) {
+                            $feed->strip_htmltags(config('feeds.strip_html_tags.tags'));
+                        } else {
+                            $feed->strip_htmltags(false);
+                        }
+
+                        if (! $stripHtmlTags && ! empty(config('feeds.strip_attribute.tags')) && is_array(config('feeds.strip_attribute.tags'))) {
+                            $feed->strip_attributes(config('feeds.strip_attribute.tags'));
+                        } else {
+                            $feed->strip_attributes(false);
+                        }
+
+                        if (! empty(config('feeds.curl.timeout')) && is_int(config('feeds.curl.timeout'))) {
+                            $feed->set_timeout(config('feeds.curl.timeout'));
+
+                        }
+
+                        $feed->init();
+                    }
+
                     $items = $feed->get_items();
                     if (count($items) === 0) {
-                        Log::info('No feeds for '.$site->link, [$feed]);
+                        Log::info('No feeds for '.$site->link, ['error' => $feed->error()]);
+                        if ($site->pauses_at !== null) {
+                            $site->pauses_at->addHours(3);
+                        } else {
+                            $site->pauses_at = now()->addMinutes(30);
+                        }
+                        $site->save();
+
                         return true;
                     }
                     foreach ($items as $item) {
@@ -109,16 +152,18 @@ class FeedsRead extends Command
                             'photo'        => $photo,
                             'link'         => $item->get_link(),
                             'description'  => $description,
-                            'published_at' => new Carbon($item->get_date()),
+                            'published_at' => (new Carbon($item->get_date()))->setTimezone('UTC'),
                         ]);
 
-                        if ($feed->isDirty(['title', 'published_at']) || !$feed->exists) {
+                        if ($feed->isDirty(['title', 'published_at']) || ! $feed->exists) {
                             $feed->save();
                         }
                     }
                     $site->fed_at = now();
+                    $site->pauses_at = null;
                     $site->save();
                     $this->cookies = [];
+
                     return true;
                 });
             });

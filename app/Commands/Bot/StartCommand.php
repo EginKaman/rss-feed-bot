@@ -23,12 +23,14 @@ class StartCommand extends CommandHandler
         $telegramUser = TelegramUser::query()
             ->firstOrNew([
                 'id'            => $this->update->message->from->id,
+            ], [
                 'is_bot'        => $this->update->message->from->is_bot,
                 'first_name'    => $this->update->message->from->first_name ?? null,
                 'last_name'     => $this->update->message->from->last_name ?? null,
                 'username'      => $this->update->message->from->username ?? null,
                 'language_code' => $this->update->message->from->language_code,
             ]);
+        $telegramUser->fill($this->update->message->from->toArray());
         if ($this->update->message->from->is_bot) {
             $telegramUser->fill([
                 'can_join_groups'             => $this->update->message->from->can_join_groups,
@@ -42,7 +44,8 @@ class StartCommand extends CommandHandler
 
         try {
             $this->sendMessage([
-                'text' => "Hello, {$this->update->message->from->first_name}!",
+                'text'    => "Hello, {$this->update->message->from->first_name}!",
+                'chat_id' => $this->update->message->from->id,
             ]);
         } catch (Exception $exception) {
             if (Str::contains($exception->getMessage(), 'bot was blocked by the user')) {
