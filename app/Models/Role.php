@@ -28,7 +28,7 @@ class Role extends Model implements RoleInterface
     protected $table = 'roles';
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $fillable = [
         'id',
@@ -38,16 +38,13 @@ class Role extends Model implements RoleInterface
     ];
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $casts = [
         'permissions' => 'array',
     ];
 
-    /**
-     * @var array
-     */
-    protected $allowedFilters = [
+    protected array $allowedFilters = [
         'id'          => Like::class,
         'name'        => Like::class,
         'slug'        => Like::class,
@@ -73,9 +70,6 @@ class Role extends Model implements RoleInterface
         return $this->getKey();
     }
 
-    /**
-     * @return string
-     */
     public function getRoleSlug(): string
     {
         return $this->getAttribute('slug');
@@ -91,8 +85,6 @@ class Role extends Model implements RoleInterface
 
     /**
      * The Users relationship.
-     *
-     * @return BelongsToMany
      */
     public function users(): BelongsToMany
     {
@@ -101,8 +93,6 @@ class Role extends Model implements RoleInterface
 
     /**
      * @throws Exception
-     *
-     * @return bool|null
      */
     public function delete(): ?bool
     {

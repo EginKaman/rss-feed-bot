@@ -35,8 +35,6 @@ class ExampleFieldsScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -45,8 +43,6 @@ class ExampleFieldsScreen extends Screen
 
     /**
      * Display header description.
-     *
-     * @return string|null
      */
     public function description(): ?string
     {
@@ -73,7 +69,6 @@ class ExampleFieldsScreen extends Screen
         return [
             Layout::columns([
                 Layout::rows([
-
                     Input::make('name')
                         ->title('Full Name:')
                         ->placeholder('Enter full name')
@@ -114,7 +109,6 @@ class ExampleFieldsScreen extends Screen
                     TextArea::make('textarea')
                         ->title('Example textarea')
                         ->rows(6),
-
                 ])->title('Base Controls'),
                 Layout::rows([
                     Input::make('disabled_input')
@@ -161,7 +155,6 @@ class ExampleFieldsScreen extends Screen
                         ->placeholder('Readonlyd textarea')
                         ->rows(7)
                         ->disabled(),
-
                 ])->title('Input States'),
             ]),
 
@@ -282,12 +275,11 @@ class ExampleFieldsScreen extends Screen
                 Button::make('Submit')
                     ->method('buttonClickProcessing')
                     ->type(Color::DEFAULT()),
-
             ])->title('Textual HTML5 Inputs'),
         ];
     }
 
-    public function buttonClickProcessing()
+    public function buttonClickProcessing(): void
     {
         Alert::warning('Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.');
     }

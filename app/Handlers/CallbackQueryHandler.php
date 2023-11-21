@@ -37,7 +37,7 @@ class CallbackQueryHandler extends UpdateHandler
             return;
         }
         $sites = Site::paginate(5, ['*'], 'page', $data['p']);
-        $keyboard = array_map(function ($site) {
+        $keyboard = array_map(static function ($site) {
             return [[
                 'text'          => $site->title,
                 'callback_data' => json_encode([

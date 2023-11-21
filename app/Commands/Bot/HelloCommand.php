@@ -11,9 +11,6 @@ class HelloCommand extends CommandHandler
     protected static $aliases = ['/hello', '/h'];
     protected static $description = 'Send "/hello" or "/h" to get "Hello, {user}!"';
 
-    /**
-     * @return void
-     */
     public function handle(): void
     {
         $this->sendMessage([

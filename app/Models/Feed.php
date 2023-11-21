@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Orchid\Presenters\FeedPresenter;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,14 +19,7 @@ use Orchid\Screen\AsSource;
 
 class Feed extends Model
 {
-    use AsSource, Filterable, HasFactory, Searchable, SoftDeletes;
-
-    /**
-     * The "type" of the primary key ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'uuid';
+    use AsSource, Filterable, HasFactory, HasUuids, Searchable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -43,10 +37,9 @@ class Feed extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var string[]
      */
     protected $casts = [
-        'id'           => 'string',
         'title'        => 'string',
         'published_at' => 'datetime',
     ];
@@ -74,17 +67,12 @@ class Feed extends Model
 
     /**
      * Get the presenter for the model.
-     *
-     * @return FeedPresenter
      */
     public function presenter(): FeedPresenter
     {
         return new FeedPresenter($this);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class)->withTrashed();

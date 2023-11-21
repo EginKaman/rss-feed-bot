@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('feeds:read')->everyMinute();
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
         $schedule->command('telescope:prune --hours=48')->daily();
+        $schedule->command('activitylog:clean')->daily();
     }
 
     /**
@@ -25,7 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

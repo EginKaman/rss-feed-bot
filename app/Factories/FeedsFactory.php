@@ -1,0 +1,115 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Factories;
+
+use Illuminate\Support\Arr;
+use SimplePie\SimplePie;
+
+class FeedsFactory
+{
+    /**
+     * The config.
+     */
+    protected array $config;
+
+    protected SimplePie $simplePie;
+
+    /**
+     * FeedsFactory constructor.
+     */
+    public function __construct(array $config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @param array|string $feedUrl RSS URL
+     * @param int $limit items returned per-feed with multifeeds
+     * @param ?array $options
+     */
+    public function make(array|string $feedUrl = [], int $limit = 0, bool $forceFeed = false, ?array $options = null): SimplePie
+    {
+        $this->simplePie = new SimplePie();
+        $this->configure();
+        $this->simplePie->set_feed_url($feedUrl);
+        $this->simplePie->set_item_limit($limit);
+
+        if ($forceFeed === true) {
+            $this->simplePie->force_feed(true);
+        }
+
+        $stripHtmlTags = Arr::get($this->config, 'strip_html_tags.disabled', false);
+
+        if (! $stripHtmlTags && ! empty($this->config['strip_html_tags.tags']) && is_array($this->config['strip_html_tags.tags'])) {
+            $this->simplePie->strip_htmltags($this->config['strip_html_tags.tags']);
+        } else {
+            $this->simplePie->strip_htmltags(false);
+        }
+
+        if (! $stripHtmlTags && ! empty($this->config['strip_attribute.tags']) && is_array($this->config['strip_attribute.tags'])) {
+            $this->simplePie->strip_attributes($this->config['strip_attribute.tags']);
+        } else {
+            $this->simplePie->strip_attributes(false);
+        }
+
+        if (isset($this->config['curl.timeout']) && is_int($this->config['curl.timeout'])) {
+            $this->simplePie->set_timeout($this->config['curl.timeout']);
+        }
+
+        if (isset($options) && is_array($options)) {
+            if (isset($options['curl.options']) && is_array($options['curl.options'])) {
+                $this->simplePie->set_curl_options($this->simplePie->curl_options + $options['curl.options']);
+            }
+
+            if (isset($options['strip_html_tags.tags']) && is_array($options['strip_html_tags.tags'])) {
+                $this->simplePie->strip_htmltags($options['strip_html_tags.tags']);
+            }
+
+            if (isset($options['strip_attribute.tags']) && is_array($options['strip_attribute.tags'])) {
+                $this->simplePie->strip_attributes($options['strip_attribute.tags']);
+            }
+
+            if (isset($options['curl.timeout']) && is_int($options['curl.timeout'])) {
+                $this->simplePie->set_timeout($options['curl.timeout']);
+            }
+        }
+
+        $this->simplePie->init();
+
+        return $this->simplePie;
+    }
+
+    /**
+     * Configure SimplePie.
+     */
+    protected function configure(): void
+    {
+        $curlOptions = [];
+
+        if ($this->config['cache.disabled']) {
+            $this->simplePie->enable_cache(false);
+        } else {
+            $this->simplePie->set_cache_location($this->config['cache.location']);
+            $this->simplePie->set_cache_duration($this->config['cache.life']);
+        }
+
+        if (isset($this->config['user_agent']) && ! empty($this->config['user_agent'])) {
+            $this->simplePie->set_useragent($this->config['user_agent']);
+        }
+
+        if (isset($this->config['curl.options']) && is_array($this->config['curl.options'])) {
+            $curlOptions += $this->config['curl.options'];
+        }
+
+        if ($this->config['ssl_check.disabled']) {
+            $curlOptions[CURLOPT_SSL_VERIFYHOST] = false;
+            $curlOptions[CURLOPT_SSL_VERIFYPEER] = false;
+        }
+
+        if (is_array($curlOptions)) {
+            $this->simplePie->set_curl_options($curlOptions);
+        }
+    }
+}

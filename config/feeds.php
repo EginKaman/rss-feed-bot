@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Cache Location
@@ -101,11 +100,12 @@ return [
     |
     */
     'curl.options' => [
-        CURLOPT_USERAGENT      => 'Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/116.0',
+        CURLOPT_USERAGENT      => 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:109.0) Gecko/20100101 Firefox/118.0',
         CURLOPT_RETURNTRANSFER => 1,
         CURLOPT_AUTOREFERER    => true,
+        CURLOPT_SSL_VERIFYHOST => false,
+        CURLOPT_SSL_VERIFYPEER => false,
     ],
 
     'curl.timeout' => 120,
-
 ];

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Commands\Bot;
 
 use App\Models\Site;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use JsonException;
@@ -30,15 +31,11 @@ class SitesCommand extends CommandHandler
 
     /**
      * This function should handle updates.
-     *
-     * @throws JsonException
-     *
-     * @return void
      */
     public function handle(): void
     {
         $sites = Site::paginate(5);
-        $keyboard = Arr::map($sites->items(), fn (Site $site) => [
+        $keyboard = Arr::map($sites->items(), static fn (Site $site) => [
             [
                 'text'          => $site->title,
                 'callback_data' => json_encode([
@@ -61,11 +58,7 @@ class SitesCommand extends CommandHandler
     }
 
     /**
-     * @param Site $site
-     *
      * @throws JsonException
-     *
-     * @return array
      */
     protected static function mapSite(Site $site): array
     {
@@ -80,12 +73,7 @@ class SitesCommand extends CommandHandler
         ];
     }
 
-    /**
-     * @param $sites
-     *
-     * @return array
-     */
-    protected function getNextPageKeyboard($sites): array
+    protected function getNextPageKeyboard(LengthAwarePaginator $sites): array
     {
         try {
             return [

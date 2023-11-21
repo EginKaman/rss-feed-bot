@@ -10,15 +10,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\ModalToggle;
+use Orchid\Screen\Components\Cells\Currency;
+use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Repository;
 use Orchid\Screen\Screen;
 use Orchid\Screen\TD;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExampleScreen extends Screen
 {
@@ -60,13 +60,12 @@ class ExampleScreen extends Screen
                     'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
                 ],
             ],
-            'table' => [
+            'table'   => [
                 new Repository(['id' => 100, 'name' => self::TEXT_EXAMPLE, 'price' => 10.24, 'created_at' => '01.01.2020']),
                 new Repository(['id' => 200, 'name' => self::TEXT_EXAMPLE, 'price' => 65.9, 'created_at' => '01.01.2020']),
                 new Repository(['id' => 300, 'name' => self::TEXT_EXAMPLE, 'price' => 754.2, 'created_at' => '01.01.2020']),
                 new Repository(['id' => 400, 'name' => self::TEXT_EXAMPLE, 'price' => 0.1, 'created_at' => '01.01.2020']),
                 new Repository(['id' => 500, 'name' => self::TEXT_EXAMPLE, 'price' => 0.15, 'created_at' => '01.01.2020']),
-
             ],
             'metrics' => [
                 'sales'    => ['value' => number_format(6851), 'diff' => 10.08],
@@ -79,12 +78,18 @@ class ExampleScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
-        return 'Example screen';
+        return 'Example Screen';
+    }
+
+    /**
+     * Display header description.
+     */
+    public function description(): ?string
+    {
+        return 'Sample Screen Components';
     }
 
     /**
@@ -95,53 +100,22 @@ class ExampleScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-
             Button::make('Show toast')
                 ->method('showToast')
                 ->novalidate()
-                ->icon('bag'),
+                ->icon('bs.chat-square-dots'),
 
             ModalToggle::make('Launch demo modal')
                 ->modal('exampleModal')
                 ->method('showToast')
-                ->icon('full-screen'),
-
-            Button::make('Export file')
-                ->method('export')
-                ->icon('cloud-download')
-                ->rawClick()
-                ->novalidate(),
-
-            DropDown::make('Dropdown button')
-                ->icon('folder-alt')
-                ->list([
-
-                    Button::make('Action')
-                        ->method('showToast')
-                        ->icon('bag'),
-
-                    Button::make('Another action')
-                        ->method('showToast')
-                        ->icon('bubbles'),
-
-                    Button::make('Something else here')
-                        ->method('showToast')
-                        ->icon('bulb'),
-
-                    Button::make('Confirm button')
-                        ->method('showToast')
-                        ->confirm('If you click you will see a toast message')
-                        ->novalidate()
-                        ->icon('shield'),
-                ]),
-
+                ->icon('bs.window'),
         ];
     }
 
     /**
      * The screen's layout elements.
      *
-     * @return string[]|\Orchid\Screen\Layout[]
+     * @return \Orchid\Screen\Layout[]|string[]
      */
     public function layout(): iterable
     {
@@ -155,29 +129,35 @@ class ExampleScreen extends Screen
 
             Layout::columns([
                 ChartLineExample::make('charts', 'Line Chart')
-                    ->description('It is simple Line Charts with different colors.'),
+                    ->description('Visualize data trends with multi-colored line graphs.'),
 
                 ChartBarExample::make('charts', 'Bar Chart')
-                    ->description('It is simple Bar Charts with different colors.'),
+                    ->description('Compare data sets with colorful bar graphs.'),
             ]),
 
             Layout::table('table', [
                 TD::make('id', 'ID')
-                    ->width('150')
-                    ->render(fn (Repository $model) => // Please use view('path')
-                    "<img src='https://loremflickr.com/500/300?random={$model->get('id')}'
+                    ->width('100')
+                    ->render(static fn (Repository $model) // Please use view('path')
+                    => "<img src='https://loremflickr.com/500/300?random={$model->get('id')}'
                               alt='sample'
                               class='mw-100 d-block img-fluid rounded-1 w-100'>
                             <span class='small text-muted mt-1 mb-0'># {$model->get('id')}</span>"),
 
                 TD::make('name', 'Name')
                     ->width('450')
-                    ->render(fn (Repository $model) => Str::limit($model->get('name'), 200)),
+                    ->render(static fn (Repository $model) => Str::limit($model->get('name'), 200)),
 
                 TD::make('price', 'Price')
-                    ->render(fn (Repository $model) => '$ '.number_format($model->get('price'), 2)),
+                    ->width('100')
+                    ->usingComponent(Currency::class, before: '$')
+                    ->align(TD::ALIGN_RIGHT)
+                    ->sort(),
 
-                TD::make('created_at', 'Created'),
+                TD::make('created_at', 'Created')
+                    ->width('100')
+                    ->usingComponent(DateTimeSplit::class)
+                    ->align(TD::ALIGN_RIGHT),
             ]),
 
             Layout::modal('exampleModal', Layout::rows([
@@ -190,45 +170,8 @@ class ExampleScreen extends Screen
         ];
     }
 
-    /**
-     * Display header description.
-     *
-     * @return string|null
-     */
-    public function description(): ?string
-    {
-        return 'Sample Screen Components';
-    }
-
-    /**
-     * @param Request $request
-     */
     public function showToast(Request $request): void
     {
         Toast::warning($request->get('toast', 'Hello, world! This is a toast message.'));
-    }
-
-    /**
-     * @return StreamedResponse
-     */
-    public function export()
-    {
-        return response()->streamDownload(function () {
-            $csv = tap(fopen('php://output', 'wb'), function ($csv) {
-                fputcsv($csv, ['header:col1', 'header:col2', 'header:col3']);
-            });
-
-            collect([
-                ['row1:col1', 'row1:col2', 'row1:col3'],
-                ['row2:col1', 'row2:col2', 'row2:col3'],
-                ['row3:col1', 'row3:col2', 'row3:col3'],
-            ])->each(function (array $row) use ($csv) {
-                fputcsv($csv, $row);
-            });
-
-            return tap($csv, function ($csv) {
-                fclose($csv);
-            });
-        }, 'File-name.csv');
     }
 }

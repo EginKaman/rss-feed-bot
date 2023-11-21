@@ -22,8 +22,6 @@ class SendUpdatedFeedToTelegramUsers implements ShouldQueue
 
     /**
      * Create a new job instance.
-     *
-     * @param Feed $item
      */
     public function __construct(Feed $item)
     {
@@ -32,12 +30,10 @@ class SendUpdatedFeedToTelegramUsers implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle(): void
     {
-        TelegramUser::chunk(10, function ($telegramUsers) {
+        TelegramUser::chunk(10, function ($telegramUsers): void {
             Notification::sendNow($telegramUsers, new UpdatedFeed($this->item));
         });
     }

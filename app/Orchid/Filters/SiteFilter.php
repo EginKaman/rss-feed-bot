@@ -12,8 +12,6 @@ class SiteFilter extends Filter
 {
     /**
      * The displayable name of the filter.
-     *
-     * @return string
      */
     public function name(): string
     {
@@ -22,8 +20,6 @@ class SiteFilter extends Filter
 
     /**
      * The array of matched parameters.
-     *
-     * @return array|null
      */
     public function parameters(): ?array
     {
@@ -32,10 +28,6 @@ class SiteFilter extends Filter
 
     /**
      * Apply to a given Eloquent query builder.
-     *
-     * @param Builder $builder
-     *
-     * @return Builder
      */
     public function run(Builder $builder): Builder
     {

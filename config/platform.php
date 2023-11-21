@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Sub-Domain Routing
@@ -239,5 +238,4 @@ return [
     */
 
     'provider'      => \App\Orchid\PlatformProvider::class,
-
 ];

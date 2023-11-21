@@ -40,7 +40,7 @@ class TelegramUser extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var string[]
      */
     protected $casts = [
         'is_bot'                      => 'boolean',

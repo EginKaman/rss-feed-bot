@@ -36,8 +36,6 @@ class UserListScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -46,17 +44,12 @@ class UserListScreen extends Screen
 
     /**
      * Display header description.
-     *
-     * @return string|null
      */
     public function description(): ?string
     {
         return 'All registered users';
     }
 
-    /**
-     * @return iterable|null
-     */
     public function permission(): ?iterable
     {
         return [
@@ -81,7 +74,7 @@ class UserListScreen extends Screen
     /**
      * The screen's layout elements.
      *
-     * @return string[]|\Orchid\Screen\Layout[]
+     * @return \Orchid\Screen\Layout[]|string[]
      */
     public function layout(): iterable
     {
@@ -95,8 +88,6 @@ class UserListScreen extends Screen
     }
 
     /**
-     * @param User $user
-     *
      * @return array
      */
     public function asyncGetUser(User $user): iterable
@@ -106,10 +97,6 @@ class UserListScreen extends Screen
         ];
     }
 
-    /**
-     * @param Request $request
-     * @param User    $user
-     */
     public function saveUser(Request $request, User $user): void
     {
         $request->validate([
@@ -124,9 +111,6 @@ class UserListScreen extends Screen
         Toast::info(__('User was saved.'));
     }
 
-    /**
-     * @param Request $request
-     */
     public function remove(Request $request): void
     {
         User::findOrFail($request->get('id'))->delete();

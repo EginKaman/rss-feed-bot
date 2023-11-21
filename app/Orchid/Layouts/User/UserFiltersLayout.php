@@ -11,7 +11,7 @@ use Orchid\Screen\Layouts\Selection;
 class UserFiltersLayout extends Selection
 {
     /**
-     * @return string[]|Filter[]
+     * @return Filter[]|string[]
      */
     public function filters(): array
     {

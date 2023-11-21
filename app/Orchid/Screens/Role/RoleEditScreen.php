@@ -24,8 +24,6 @@ class RoleEditScreen extends Screen
     /**
      * Fetch data to be displayed on the screen.
      *
-     * @param Role $role
-     *
      * @return array
      */
     public function query(Role $role): iterable
@@ -38,17 +36,12 @@ class RoleEditScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
         return 'Manage roles';
     }
 
-    /**
-     * @return iterable|null
-     */
     public function permission(): ?iterable
     {
         return [
@@ -78,7 +71,7 @@ class RoleEditScreen extends Screen
     /**
      * The screen's layout elements.
      *
-     * @return string[]|\Orchid\Screen\Layout[]
+     * @return \Orchid\Screen\Layout[]|string[]
      */
     public function layout(): iterable
     {
@@ -99,20 +92,12 @@ class RoleEditScreen extends Screen
 
     /**
      * Display header description.
-     *
-     * @return string|null
      */
     public function description(): ?string
     {
         return 'Access rights';
     }
 
-    /**
-     * @param Request $request
-     * @param Role    $role
-     *
-     * @return RedirectResponse
-     */
     public function save(Request $request, Role $role): RedirectResponse
     {
         $request->validate([
@@ -125,7 +110,7 @@ class RoleEditScreen extends Screen
         $role->fill($request->get('role'));
 
         $role->permissions = collect($request->get('permissions'))
-            ->map(fn ($value, $key) => [base64_decode($key) => $value])
+            ->map(static fn ($value, $key) => [base64_decode($key, true) => $value])
             ->collapse()
             ->toArray();
 
@@ -137,8 +122,6 @@ class RoleEditScreen extends Screen
     }
 
     /**
-     * @param Role $role
-     *
      * @throws Exception
      *
      * @return RedirectResponse

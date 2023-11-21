@@ -14,22 +14,15 @@ class RoleFilter extends Filter
 {
     /**
      * The array of matched parameters.
-     *
-     * @return array|null
      */
     public function parameters(): ?array
     {
         return ['role'];
     }
 
-    /**
-     * @param Builder $builder
-     *
-     * @return Builder
-     */
     public function run(Builder $builder): Builder
     {
-        return $builder->whereHas('roles', function (Builder $query) {
+        return $builder->whereHas('roles', function (Builder $query): void {
             $query->where('slug', $this->request->get('role'));
         });
     }
@@ -48,17 +41,11 @@ class RoleFilter extends Filter
         ];
     }
 
-    /**
-     * @return string
-     */
     public function value(): string
     {
-        return $this->name().': '.Role::where('slug', $this->request->get('role'))->first()->name;
+        return $this->name() . ': ' . Role::where('slug', $this->request->get('role'))->first()->name;
     }
 
-    /**
-     * @return string
-     */
     public function name(): string
     {
         return __('Roles');

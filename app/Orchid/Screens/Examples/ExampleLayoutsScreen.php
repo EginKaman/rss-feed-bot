@@ -24,8 +24,6 @@ class ExampleLayoutsScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -52,7 +50,6 @@ class ExampleLayoutsScreen extends Screen
     public function layout(): iterable
     {
         return [
-
             Layout::block(Layout::view('platform::dummy.block'))
                 ->title('Block header')
                 ->description('Excellent description that editing or views in block'),
@@ -77,14 +74,11 @@ class ExampleLayoutsScreen extends Screen
                 'Collapsible Group Item #2' => Layout::view('platform::dummy.block'),
                 'Collapsible Group Item #3' => Layout::view('platform::dummy.block'),
             ]),
-
         ];
     }
 
     /**
      * Display header description.
-     *
-     * @return string|null
      */
     public function description(): ?string
     {

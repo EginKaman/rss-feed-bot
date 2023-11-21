@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,13 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class AlternativeLink extends Model
 {
     use HasFactory;
-
-    /**
-     * The "type" of the primary key ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
+    use HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -30,9 +25,6 @@ class AlternativeLink extends Model
         'link',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class);

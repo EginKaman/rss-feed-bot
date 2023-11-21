@@ -16,7 +16,6 @@ class AlternativeLinkFactory extends Factory
     public function definition()
     {
         return [
-            //
         ];
     }
 }

@@ -15,9 +15,6 @@ class StartCommand extends CommandHandler
     protected static $aliases = ['/start', '/s'];
     protected static $description = 'Send "/start" or "/s" to start use the bot';
 
-    /**
-     * @return void
-     */
     public function handle(): void
     {
         $telegramUser = TelegramUser::query()

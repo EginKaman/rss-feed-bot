@@ -15,7 +15,7 @@ use Throwable;
 class RolePermissionLayout extends Rows
 {
     /**
-     * @var User|null
+     * @var null|User
      */
     private $user;
 
@@ -35,11 +35,6 @@ class RolePermissionLayout extends Rows
         );
     }
 
-    /**
-     * @param Collection $permissionsRaw
-     *
-     * @return array
-     */
     private function generatedPermissionFields(Collection $permissionsRaw): array
     {
         return $permissionsRaw
@@ -48,34 +43,23 @@ class RolePermissionLayout extends Rows
             ->toArray();
     }
 
-    /**
-     * @param Collection $permissions
-     * @param string     $title
-     *
-     * @return Collection
-     */
     private function makeCheckBoxGroup(Collection $permissions, string $title): Collection
     {
         return $permissions
             ->map(fn (array $chunks) => $this->makeCheckBox(collect($chunks)))
             ->flatten()
-            ->map(fn (CheckBox $checkbox, $key) => $key === 0
+            ->map(static fn (CheckBox $checkbox, $key) => $key === 0
                 ? $checkbox->title($title)
                 : $checkbox)
             ->chunk(4)
-            ->map(fn (Collection $checkboxes) => Group::make($checkboxes->toArray())
+            ->map(static fn (Collection $checkboxes) => Group::make($checkboxes->toArray())
                 ->alignEnd()
                 ->autoWidth());
     }
 
-    /**
-     * @param Collection $chunks
-     *
-     * @return CheckBox
-     */
     private function makeCheckBox(Collection $chunks): CheckBox
     {
-        return CheckBox::make('permissions.'.base64_encode($chunks->get('slug')))
+        return CheckBox::make('permissions.' . base64_encode($chunks->get('slug')))
             ->placeholder($chunks->get('description'))
             ->value($chunks->get('active'))
             ->sendTrueOrFalse()
@@ -85,12 +69,6 @@ class RolePermissionLayout extends Rows
             ));
     }
 
-    /**
-     * @param $slug
-     * @param $value
-     *
-     * @return bool
-     */
     private function getIndeterminateStatus($slug, $value): bool
     {
         return optional($this->user)->hasAccess($slug) === true && $value === false;

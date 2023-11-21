@@ -5,7 +5,6 @@ declare(strict_types=1);
 use App\Models\User;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Search Engine
@@ -154,5 +153,4 @@ return [
             ],
         ],
     ],
-
 ];

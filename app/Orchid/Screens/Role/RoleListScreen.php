@@ -27,8 +27,6 @@ class RoleListScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -37,17 +35,12 @@ class RoleListScreen extends Screen
 
     /**
      * Display header description.
-     *
-     * @return string|null
      */
     public function description(): ?string
     {
         return 'Access rights';
     }
 
-    /**
-     * @return iterable|null
-     */
     public function permission(): ?iterable
     {
         return [
@@ -72,7 +65,7 @@ class RoleListScreen extends Screen
     /**
      * The screen's layout elements.
      *
-     * @return string[]|Layout[]
+     * @return Layout[]|string[]
      */
     public function layout(): iterable
     {

@@ -31,25 +31,23 @@ class FeedListLayout extends Table
             TD::make('link', __('Link'))
                 ->sort()
                 ->cantHide()
-                ->render(fn (Feed $feed) => Link::make(__('Open'))
+                ->render(static fn (Feed $feed) => Link::make(__('Open'))
                     ->href($feed->link)->target('_blank')),
 
             TD::make('site', __('Site'))
-                ->render(function (Feed $feed) {
-                    return e($feed->site->title);
-                })
+                ->render(static fn (Feed $feed) => e($feed->site->title))
                 ->cantHide()
                 ->filter(Input::make())
-                ->render(fn (Feed $feed) => Link::make($feed->site->title)
+                ->render(static fn (Feed $feed) => Link::make($feed->site->title)
                     ->route('platform.sites.edit', $feed->site_id)),
 
             TD::make('published_at', __('Published'))
                 ->sort()
-                ->render(fn (Feed $feed) => $feed->published_at->toDateTimeString()),
+                ->render(static fn (Feed $feed) => $feed->published_at->toDateTimeString()),
 
             TD::make('created_at', __('Created'))
                 ->sort()
-                ->render(fn (Feed $feed) => $feed->created_at->toDateTimeString()),
+                ->render(static fn (Feed $feed) => $feed->created_at->toDateTimeString()),
         ];
     }
 }

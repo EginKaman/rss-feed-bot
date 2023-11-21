@@ -6,18 +6,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+return new class() extends Migration
 {
     public function up(): void
     {
-        Schema::table('feeds', function (Blueprint $table) {
+        Schema::table('feeds', static function (Blueprint $table): void {
             $table->index('site_id');
         });
     }
 
     public function down(): void
     {
-        Schema::table('feeds', function (Blueprint $table) {
+        Schema::table('feeds', static function (Blueprint $table): void {
             $table->dropIndex(['site_id']);
         });
     }

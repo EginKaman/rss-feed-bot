@@ -20,14 +20,12 @@ class FeedListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'feeds' => Feed::with('site')->filters()->defaultSort('created_at', 'desc')->paginate(),
+            'feeds' => Feed::with('site')->filters()->orderBy('created_at', 'desc')->paginate(),
         ];
     }
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -36,17 +34,12 @@ class FeedListScreen extends Screen
 
     /**
      * Display header description.
-     *
-     * @return string|null
      */
     public function description(): ?string
     {
         return 'Access rights';
     }
 
-    /**
-     * @return iterable|null
-     */
     public function permission(): ?iterable
     {
         return [
@@ -67,7 +60,7 @@ class FeedListScreen extends Screen
     /**
      * The screen's layout elements.
      *
-     * @return string[]|Layout[]
+     * @return Layout[]|string[]
      */
     public function layout(): iterable
     {

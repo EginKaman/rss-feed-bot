@@ -23,15 +23,13 @@ class SiteListScreen extends Screen
         return [
             'sites' => Site::filters()
                 ->withCount('feeds')
-                ->defaultSort('created_at', 'desc')
+                ->orderBy('created_at', 'desc')
                 ->paginate(),
         ];
     }
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -40,17 +38,12 @@ class SiteListScreen extends Screen
 
     /**
      * Display header description.
-     *
-     * @return string|null
      */
     public function description(): ?string
     {
         return 'Access rights';
     }
 
-    /**
-     * @return iterable|null
-     */
     public function permission(): ?iterable
     {
         return [
@@ -75,7 +68,7 @@ class SiteListScreen extends Screen
     /**
      * The screen's layout elements.
      *
-     * @return string[]|Layout[]
+     * @return Layout[]|string[]
      */
     public function layout(): iterable
     {

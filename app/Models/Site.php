@@ -15,10 +15,18 @@ use Orchid\Filters\Filterable;
 use Orchid\Filters\Types\Ilike;
 use Orchid\Filters\Types\WhereDateStartEnd;
 use Orchid\Screen\AsSource;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Site extends Model
 {
-    use AsSource, Filterable, HasFactory, HasUuids, Searchable, SoftDeletes;
+    use AsSource;
+    use Filterable;
+    use HasFactory;
+    use HasUuids;
+    use LogsActivity;
+    use Searchable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -32,19 +40,19 @@ class Site extends Model
         'description',
         'is_disabled',
         'fed_at',
-        'paused_at',
+        'pauses_at',
     ];
 
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var string[]
      */
     protected $casts = [
         'id'           => 'string',
         'is_disabled'  => 'boolean',
         'fed_at'       => 'datetime',
-        'paused_at'    => 'datetime',
+        'pauses_at'    => 'datetime',
     ];
 
     protected array $allowedFilters = [
@@ -71,35 +79,32 @@ class Site extends Model
 
     /**
      * Get the presenter for the model.
-     *
-     * @return SitePresenter
      */
     public function presenter(): SitePresenter
     {
         return new SitePresenter($this);
     }
 
-    /**
-     * @return HasMany
-     */
     public function feeds(): HasMany
     {
         return $this->hasMany(Feed::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function authentications(): HasMany
     {
         return $this->hasMany(SiteAuthentication::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function alternativeLinks(): HasMany
     {
         return $this->hasMany(AlternativeLink::class);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll()
+            ->dontLogIfAttributesChangedOnly(['fed_at', 'updated_at'])
+            ->logOnlyDirty();
     }
 }

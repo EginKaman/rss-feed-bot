@@ -22,8 +22,6 @@ class SiteEditScreen extends Screen
     /**
      * Fetch data to be displayed on the screen.
      *
-     * @param Site $site
-     *
      * @return array
      */
     public function query(Site $site): iterable
@@ -35,17 +33,12 @@ class SiteEditScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
         return 'Manage site';
     }
 
-    /**
-     * @return iterable|null
-     */
     public function permission(): ?iterable
     {
         return [
@@ -75,7 +68,7 @@ class SiteEditScreen extends Screen
     /**
      * The screen's layout elements.
      *
-     * @return string[]|\Orchid\Screen\Layout[]
+     * @return \Orchid\Screen\Layout[]|string[]
      */
     public function layout(): iterable
     {
@@ -96,8 +89,6 @@ class SiteEditScreen extends Screen
 
     /**
      * Display header description.
-     *
-     * @return string|null
      */
     public function description(): ?string
     {
@@ -105,9 +96,6 @@ class SiteEditScreen extends Screen
     }
 
     /**
-     * @param Request $request
-     * @param Site    $site
-     *
      * @return RedirectResponse
      */
     public function save(Request $request, Site $site)
@@ -142,8 +130,6 @@ class SiteEditScreen extends Screen
     }
 
     /**
-     * @param Site $site
-     *
      * @throws Exception
      *
      * @return RedirectResponse

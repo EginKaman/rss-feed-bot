@@ -19,20 +19,25 @@ class NewFeed extends Notification implements ShouldQueue
 
     public Feed $feed;
 
+    public bool $withoutImage = false;
+
     /**
      * Create a new notification instance.
-     *
-     * @param Feed $feed
      */
     public function __construct(Feed $feed)
     {
         $this->feed = $feed->loadMissing('site');
     }
 
+    public function withoutImage(): self
+    {
+        $this->withoutImage = true;
+
+        return $this;
+    }
+
     /**
      * Get the notification's delivery channels.
-     *
-     * @param mixed $notifiable
      *
      * @return array<string>
      */
@@ -48,8 +53,8 @@ class NewFeed extends Notification implements ShouldQueue
 <a href=\"{$this->feed->link}\">Open in browser</a>
 {$this->getAlternativeLinksToTelegram()}";
 
-        if ($this->feed->photo) {
-            return (new TelegramNotification)->bot('bot')
+        if (! $this->withoutImage && $this->feed->photo) {
+            return (new TelegramNotification())->bot('bot')
                 ->sendPhoto([
                     'chat_id'    => $notifiable->id,
                     'photo'      => $this->feed->photo,
@@ -58,7 +63,7 @@ class NewFeed extends Notification implements ShouldQueue
                 ]);
         }
 
-        return (new TelegramNotification)->bot('bot')
+        return (new TelegramNotification())->bot('bot')
             ->sendMessage([
                 'chat_id'    => $notifiable->id,
                 'text'       => $text,
@@ -70,7 +75,7 @@ class NewFeed extends Notification implements ShouldQueue
     {
         $text = '';
         foreach ($this->feed->site->alternativeLinks as $alternativeLink) {
-            $text .= PHP_EOL.'<a href="'.Str::replace($alternativeLink->replaceable_link, $alternativeLink->replaceable_link, $alternativeLink->site->link).'">Open on '.$alternativeLink->title.'</a>';
+            $text .= PHP_EOL . '<a href="' . Str::replace($alternativeLink->replaceable_link, $alternativeLink->replaceable_link, $alternativeLink->site->link) . '">Open on ' . $alternativeLink->title . '</a>';
         }
 
         return $text;

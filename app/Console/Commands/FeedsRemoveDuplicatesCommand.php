@@ -20,11 +20,11 @@ class FeedsRemoveDuplicatesCommand extends Command
             ->groupBy('link')
             ->havingRaw('count(*) > 1')->get();
 
-        $duplicatedFeeds->each(function (Feed $feed) {
-            $this->info("$feed->link with count: $feed->count");
+        $duplicatedFeeds->each(function (Feed $feed): void {
+            $this->info("{$feed->link} with count: {$feed->count}");
             $duplicatedIds = Feed::where('link',
                 $feed->link)->orderBy('created_at')->limit($feed->count - 1)->pluck('id');
-            $this->info('Will be deleted: '.$duplicatedIds->count());
+            $this->info('Will be deleted: ' . $duplicatedIds->count());
             Feed::whereIn('id', $duplicatedIds)->delete();
         });
 

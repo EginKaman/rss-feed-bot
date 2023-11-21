@@ -15,7 +15,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
     }
 
     /**
@@ -23,8 +22,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        RateLimiter::for('telegram', function (object $job) {
-            return Limit::perMinute(30);
-        });
+        RateLimiter::for('telegram', static fn (object $job) => Limit::perMinute(30));
     }
 }

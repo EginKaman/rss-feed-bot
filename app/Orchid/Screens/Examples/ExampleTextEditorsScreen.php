@@ -31,8 +31,6 @@ class ExampleTextEditorsScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -41,8 +39,6 @@ class ExampleTextEditorsScreen extends Screen
 
     /**
      * Display header description.
-     *
-     * @return string|null
      */
     public function description(): ?string
     {
@@ -80,7 +76,6 @@ class ExampleTextEditorsScreen extends Screen
 
                 Code::make('code')
                     ->title('Code'),
-
             ]),
         ];
     }

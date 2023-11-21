@@ -22,8 +22,6 @@ class UserProfileScreen extends Screen
     /**
      * Fetch data to be displayed on the screen.
      *
-     * @param Request $request
-     *
      * @return array
      */
     public function query(Request $request): iterable
@@ -35,8 +33,6 @@ class UserProfileScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -83,35 +79,27 @@ class UserProfileScreen extends Screen
 
     /**
      * Display header description.
-     *
-     * @return string|null
      */
     public function description(): ?string
     {
         return 'Update your account details such as name, email address and password';
     }
 
-    /**
-     * @param Request $request
-     */
     public function changePassword(Request $request): void
     {
         $guard = config('platform.guard', 'web');
         $request->validate([
-            'old_password' => 'required|current_password:'.$guard,
+            'old_password' => 'required|current_password:' . $guard,
             'password'     => 'required|confirmed',
         ]);
 
-        tap($request->user(), function ($user) use ($request) {
+        tap($request->user(), static function ($user) use ($request): void {
             $user->password = Hash::make($request->get('password'));
         })->save();
 
         Toast::info(__('Password changed.'));
     }
 
-    /**
-     * @param Request $request
-     */
     public function save(Request $request): void
     {
         $request->validate([

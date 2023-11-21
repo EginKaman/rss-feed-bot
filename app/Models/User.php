@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,20 +18,8 @@ use Orchid\Screen\AsSource;
 
 class User extends Authenticatable
 {
-    use AsSource, Chartable, Filterable, HasFactory, Notifiable, Searchable, SoftDeletes, UserAccess;
+    use AsSource, Chartable, Filterable, HasFactory, HasUuids, Notifiable, Searchable, SoftDeletes, UserAccess;
 
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
-    /**
-     * The "type" of the primary key ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
     /**
      * The attributes that are mass assignable.
      *
@@ -60,7 +49,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'id'                => 'string',
         'permissions'       => 'array',
         'email_verified_at' => 'datetime',
     ];
@@ -90,9 +78,6 @@ class User extends Authenticatable
         'created_at',
     ];
 
-    /**
-     * @return BelongsToMany
-     */
     public function sites(): BelongsToMany
     {
         return $this->belongsToMany(Site::class);

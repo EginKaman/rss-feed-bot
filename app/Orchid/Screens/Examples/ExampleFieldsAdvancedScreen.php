@@ -46,8 +46,6 @@ class ExampleFieldsAdvancedScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -56,8 +54,6 @@ class ExampleFieldsAdvancedScreen extends Screen
 
     /**
      * Display header description.
-     *
-     * @return string|null
      */
     public function description(): ?string
     {
@@ -84,9 +80,7 @@ class ExampleFieldsAdvancedScreen extends Screen
     public function layout(): iterable
     {
         return [
-
             Layout::rows([
-
                 Group::make([
                     Input::make('phone')
                         ->mask('(999) 999-9999')
@@ -110,7 +104,6 @@ class ExampleFieldsAdvancedScreen extends Screen
                 ]),
 
                 Group::make([
-
                     Input::make('credit_card')
                         ->mask('9999-9999-9999-9999')
                         ->title('Credit card:')
@@ -130,11 +123,9 @@ class ExampleFieldsAdvancedScreen extends Screen
                             'numericInput' => true,
                         ]),
                 ]),
-
             ])->title('Input mask'),
 
             Layout::rows([
-
                 Group::make([
                     DateTimer::make('open')
                         ->title('Opening date')
@@ -184,7 +175,6 @@ class ExampleFieldsAdvancedScreen extends Screen
                     DateRange::make('rangeDate')
                         ->title('Range date'),
                 ]),
-
             ])->title('DateTime'),
 
             Layout::columns([
@@ -203,7 +193,6 @@ class ExampleFieldsAdvancedScreen extends Screen
                         ->title('Select for Eloquent model'),
                 ])->title('Select'),
                 Layout::rows([
-
                     Group::make([
                         CheckBox::make('free-checkbox')
                             ->sendTrueOrFalse()
@@ -226,7 +215,6 @@ class ExampleFieldsAdvancedScreen extends Screen
                             4 => 'Work',
                         ])
                         ->help('Radio buttons are normally presented in radio groups'),
-
                 ])->title('Status'),
             ]),
 
@@ -246,7 +234,6 @@ class ExampleFieldsAdvancedScreen extends Screen
             ])->title('Range'),
 
             Layout::rows([
-
                 Input::make('raw_file')
                     ->type('file')
                     ->title('File input example')
@@ -277,11 +264,9 @@ class ExampleFieldsAdvancedScreen extends Screen
                     ->media()
                     ->closeOnAdd()
                     ->horizontal(),
-
             ])->title('File upload'),
 
             Layout::rows([
-
                 UTM::make('link')
                     ->title('UTM link')
                     ->help('Generated UTM link'),
@@ -296,7 +281,6 @@ class ExampleFieldsAdvancedScreen extends Screen
                 Map::make('place')
                     ->title('Object on the map')
                     ->help('Enter the coordinates, or use the search'),
-
             ])->title('Advanced'),
         ];
     }

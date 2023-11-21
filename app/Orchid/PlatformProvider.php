@@ -17,8 +17,6 @@ class PlatformProvider extends OrchidServiceProvider
 {
     /**
      * Boot the application events.
-     *
-     * @param Dashboard $dashboard
      */
     public function boot(Dashboard $dashboard): void
     {
@@ -99,7 +97,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('shuffle')
                 ->url('https://github.com/orchidsoftware/platform/blob/master/CHANGELOG.md')
                 ->target('_blank')
-                ->badge(fn () => Dashboard::version(), Color::DARK),
+                ->badge(static fn () => Dashboard::version(), Color::DARK),
 
             Menu::make(__('Users'))
                 ->icon('user')

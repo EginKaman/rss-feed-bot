@@ -1,6 +1,7 @@
 version: '3'
 services:
     laravel.test:
+        container_name: '${APP_NAME}-app'
         build:
             context: ./docker/8.2
             dockerfile: Dockerfile
@@ -8,6 +9,7 @@ services:
                 WWWGROUP: '${WWWGROUP}'
         extra_hosts:
             - 'host.docker.internal:host-gateway'
+            - 'rss-feed.test:host-gateway'
         ports:
             - '${APP_PORT:-80}:80'
             - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
@@ -27,7 +29,8 @@ services:
             - meilisearch
             - mailpit
     pgsql:
-        image: 'postgres:15-alpine'
+        container_name: '${APP_NAME}-pgsql'
+        image: 'postgres:15'
         ports:
             - '${FORWARD_DB_PORT:-5432}:5432'
         environment:
@@ -45,6 +48,7 @@ services:
             retries: 3
             timeout: 5s
     redis:
+        container_name: '${APP_NAME}-redis'
         image: 'redis:alpine'
         ports:
             - '${FORWARD_REDIS_PORT:-6379}:6379'
@@ -57,6 +61,7 @@ services:
             retries: 3
             timeout: 5s
     meilisearch:
+        container_name: '${APP_NAME}-meilisearch'
         image: 'getmeili/meilisearch:latest'
         ports:
             - '${FORWARD_MEILISEARCH_PORT:-7700}:7700'
@@ -69,6 +74,7 @@ services:
             retries: 3
             timeout: 5s
     mailpit:
+        container_name: '${APP_NAME}-mailpit'
         image: 'axllent/mailpit:latest'
         ports:
             - '${FORWARD_MAILPIT_PORT:-1025}:1025'
